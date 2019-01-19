@@ -3,13 +3,13 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>tags | A creative expression</title>
+  <title>Algorithm | A creative expression</title>
   <meta name="author" content="generalibm">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="tags">
+  
   <meta property="og:site_name" content="A creative expression">
 
   
@@ -90,295 +90,63 @@
 
   <div class="container">
   	<div class="content">
-    	 <!-- title -->
+    	 
+
+<!-- title -->
 <div class="page-header page-header-inverse ">
-	 <h1 class="title title-inverse "><i class="fa fa-tags"></i> tags</h1>
+  <h1 class="archive-title-category title title-inverse ">Algorithm</h1>
 </div>
 
 <div class="row page">
-
+  <!-- cols -->
+  
+  <div class="col-md-9">
 	
-	<div class="col-md-9">
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-12-23 </div>
+			<div class="article-title"><a href="/2016/12/23/AnotherWayToGenerateAPrimeTable/">Another Way To Generate A Prime Table</a></div>						
+		</h3>
 	
 
-<div id="top_search"></div>
 
-
-	<div class="widget">
-		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="#New Year&#39;s Eve">New Year&#39;s Eve<span>1</span></a></li>
-		
-			<li><a href="#blog">blog<span>1</span></a></li>
-		
-			<li><a href="#commemorate">commemorate<span>1</span></a></li>
-		
-			<li><a href="#grandpa">grandpa<span>1</span></a></li>
-		
-			<li><a href="#hexo">hexo<span>1</span></a></li>
-		
-			<li><a href="#protobuf">protobuf<span>1</span></a></li>
-		
-		</ul>
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalculatePrimesUpTo</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">   ::<span class="built_in">std</span>::fill(is_prime_, is_prime_ + is_prime_size_, <span class="literal">true</span>);</span><br><span class="line">   is_prime_[<span class="number">0</span>] = is_prime_[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= max; i++) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!is_prime_[i]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Marks all multiples of i (except i itself) as non-prime.</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>*i; j &lt;= max; j += i) &#123;</span><br><span class="line">       is_prime_[j] = <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+	
 	</div>
-
-<div class="archive">
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="New Year&#39;s Eve" data-target="#modal-New Year&#39;s Eve"> New Year&#39;s Eve <b class="caret"></b></h4>
-	   <ul id="modal-New Year&#39;s Eve" class="collapse in">
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2019/01/01/New-Year-of-2019/" title="Poems I have written in Xi&#39;an and Mount Hua">New Year of 2019</a></li>
-				
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="blog" data-target="#modal-blog"> blog <b class="caret"></b></h4>
-	   <ul id="modal-blog" class="collapse in">
-	   
-	      
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2019/01/18/Deploy-a-blog-with-hexo/">Deploy a blog with hexo</a></li>
-				
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="commemorate" data-target="#modal-commemorate"> commemorate <b class="caret"></b></h4>
-	   <ul id="modal-commemorate" class="collapse in">
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2018/04/07/Commemorate-My-Grandpa/">Commemorate My Grandpa</a></li>
-				
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="grandpa" data-target="#modal-grandpa"> grandpa <b class="caret"></b></h4>
-	   <ul id="modal-grandpa" class="collapse in">
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2018/04/07/Commemorate-My-Grandpa/">Commemorate My Grandpa</a></li>
-				
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="hexo" data-target="#modal-hexo"> hexo <b class="caret"></b></h4>
-	   <ul id="modal-hexo" class="collapse in">
-	   
-	      
-		      
-			    
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2019/01/18/Deploy-a-blog-with-hexo/">Deploy a blog with hexo</a></li>
-				
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-
-	<h4 class="archive-ul show" data-toggle="collapse" id="protobuf" data-target="#modal-protobuf"> protobuf <b class="caret"></b></h4>
-	   <ul id="modal-protobuf" class="collapse in">
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-		  
-	   
-	      
-		      
-			    
-		      
-			    
-		      
-		  
-	   
-	      
-	   
-	      
-		      
-			    
-   	   	   	       <li class="listing-item"><a href="/2016/03/16/IllustrateOfProtoBuf/">Illustrate ProtoBuf</a></li>
-				
-		      
-		  
-	   
-	      
-	   
-	   
-	   </ul>
-	
-	
+  <a type="button" href="/2016/12/23/AnotherWayToGenerateAPrimeTable/#more" class="btn btn-default more">Read More</a>
 </div>
 
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
 
 
-</div> <!-- col-md-9 -->
-
-	
-		<div class="col-md-3">
+<div class="col-md-3">
 	<div id="sidebar">
 	
 			
@@ -418,11 +186,11 @@
 		
 			<li><a href="/tags/grandpa/">grandpa<span>1</span></a></li>
 		
-			<li><a href="/tags/blog/">blog<span>1</span></a></li>
-		
 			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
 			<li><a href="/tags/hexo/">hexo<span>1</span></a></li>
+		
+			<li><a href="/tags/blog/">blog<span>1</span></a></li>
 		
 			<li><a href="/tags/New-Year-s-Eve/">New Year&#39;s Eve<span>1</span></a></li>
 		
@@ -481,10 +249,9 @@
 	</div> <!-- sidebar -->
 </div> <!-- col-md-3 -->
 
-	
 
-</div> <!-- row-fluid -->
 
+</div>
 	</div>
   </div>
   <div class="container-narrow">
