@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Deploy a blog with hexo</title>
+      <link href="/2019/01/18/Deploy-a-blog-with-hexo/"/>
+      <url>/2019/01/18/Deploy-a-blog-with-hexo/</url>
+      
+        <content type="html"><![CDATA[<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><table><thead><tr><th style="text-align:center">Date</th><th style="text-align:center">Version</th><th style="text-align:center">Comments</th></tr></thead><tbody><tr><td style="text-align:center">2019-01-18</td><td style="text-align:center">v 0.0.1</td><td style="text-align:center">Create the document</td></tr></tbody></table><h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>The purpose of this document is to share some ideas that I have learn from the others about how to deploy a blog. More accurately, I will be writing about the history that how could I deploy this from zero to one. Here, I will not only try to illustrate the codes , but also show you all my configuration files and the references. I hope you could get involved well and do better than me.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> history </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> blog </tag>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>New Year of 2019</title>
+      <link href="/2019/01/01/New-Year-of-2019/"/>
+      <url>/2019/01/01/New-Year-of-2019/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> rumination </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> New Year&#39;s Eve </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Commemorate My Grandpa</title>
+      <link href="/2018/04/07/Commemorate-My-Grandpa/"/>
+      <url>/2018/04/07/Commemorate-My-Grandpa/</url>
+      
+        <content type="html"><![CDATA[<p><img src="hexo/images/20180407/CommemorateMyGrandpa.jpg" alt="CommemorateMyGrandpa"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> rumination </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> commemorate </tag>
+            
+            <tag> grandpa </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
