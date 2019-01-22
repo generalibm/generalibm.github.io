@@ -6,4 +6,6 @@ categories: rumination
 toc: true
 ---
 
+<!--more-->
+
 ![CommemorateMyGrandpa](/images/20180407/CommemorateMyGrandpa.jpg)
