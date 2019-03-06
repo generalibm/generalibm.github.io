@@ -35,7 +35,7 @@ Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用
 
 1 . 编写文件`addressbook.proto`
 
-```
+```protobuf
 //syntax = "proto2";
 
 package tutorial;
@@ -259,7 +259,7 @@ int main(int argc, char *argv[])
 `$Is this a mobile , home or work phone?work`
 
 `./reader mid_file`
-```
+```bash
 Person ID :1001
 Name : Yun MA
 Email : ali@ali.com
@@ -269,7 +269,8 @@ WORK : work
 ##### 3.2 DIY简单helloworld例子[3]
 
 1．编写`lm.helloworld.proto`文件
-```
+
+```protobuf
 syntax = "proto2";
 
 package lm;
@@ -282,11 +283,11 @@ message helloworld {
 
 ```
 2．编译生成头文件及相应实现文件
-```
+```bash
 protoc -I=./ --cpp_out=./ ./lm.helloword.proto
 ```
 3．编写writer.cc
-```
+```c++
  /**
   * @file    writer.cc
   * @author  Home Jang(generalibm@gmail.com)
@@ -322,7 +323,7 @@ int main()
 
 ```
 4．编写reader.cc
-```
+```c++
  /**
   * @file    reader.cc
   * @author  Home Jang(generalibm@gmail.com)

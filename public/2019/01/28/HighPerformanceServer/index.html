@@ -122,10 +122,7 @@
 		 </div> <!-- alert -->
 	  		
 
-	  <h1 id="High-Performance-Server-Architecture"><a href="#High-Performance-Server-Architecture" class="headerlink" title="High-Performance Server Architecture"></a>High-Performance Server Architecture</h1><p>Jeff Darcy</p>
-<p>24-31 minutes</p>
-<hr>
-<p>The purpose of this document is to share some ideas that I’ve  developed over the years about how to develop a certain kind of  application for which the term “server” is only a weak approximation.   More accurately, I’ll be writing about a broad class of programs that  are designed to handle very large numbers of discrete messages or  requests per second. Network servers most commonly fit this definition,  but not all programs that do are really servers in any sense of the  word.  For the sake of simplicity, though, and because “High-Performance  Request-Handling Programs” is a really lousy title, we’ll just say  “server” and be done with it.</p>
+	  <h2 id="High-Performance-Server-Architecture-Jeff-Darcy"><a href="#High-Performance-Server-Architecture-Jeff-Darcy" class="headerlink" title="High-Performance Server Architecture-Jeff Darcy"></a>High-Performance Server Architecture-Jeff Darcy</h2><p>The purpose of this document is to share some ideas that I’ve  developed over the years about how to develop a certain kind of  application for which the term “server” is only a weak approximation.   More accurately, I’ll be writing about a broad class of programs that  are designed to handle very large numbers of discrete messages or  requests per second. Network servers most commonly fit this definition,  but not all programs that do are really servers in any sense of the  word.  For the sake of simplicity, though, and because “High-Performance  Request-Handling Programs” is a really lousy title, we’ll just say  “server” and be done with it.</p>
 <p>这篇文档的目的在于分享一些思路，关于我多年来如何开发某些特定的应用——可以近似地称为‘’服务器‘’。更准确地说，我即将写就的是关于广义上旨在解决吞吐量（每秒处理数量巨大的非连续消息或者请求）的一类程序。网络服务器最符合这个定义，但并非所有程序所完成的功能是真正意义上的服务器程序。简而言之，因为“高性能请求处理问题”真的是一个非常蹩脚称谓，所以我们称这类程序叫做“服务器”，且一直以来就是这么叫的。</p>
 <a id="more"></a>
 <p>I will not be writing about “mildly parallel” applications, even  though multitasking within a single program is now commonplace.  The  browser you’re using to read this probably does some things in parallel,  but such low levels of parallelism really don’t introduce many  interesting challenges.  The interesting challenges occur when the  request-handling infrastructure itself is the limiting factor on overall  performance, so that improving the infrastructure actually improves  performance.  That’s not often the case for a browser running on a  gigahertz processor with a gigabyte of memory doing six simultaneous  downloads over a DSL line.  The focus here is not on applications that  sip through a straw but on those that drink from a firehose, <u>on the very  edge of hardware capabilities where how you do it really does matter</u>.</p>
@@ -301,7 +298,7 @@
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2019/01/18/Deploy-a-blog-with-hexo/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2019/01/18/DeployBlogWithHexo/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -386,7 +383,7 @@
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#High-Performance-Server-Architecture"><span class="toc-article-text">High-Performance Server Architecture</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#High-Performance-Server-Architecture-Jeff-Darcy"><span class="toc-article-text">High-Performance Server Architecture-Jeff Darcy</span></a></li></ol>
 		</div>
 	
 	</div>

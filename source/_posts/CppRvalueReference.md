@@ -3,7 +3,7 @@ title: C++ rvalue reference
 date: 2019-02-14 18:46:35
 tags: c++2.0
 keyword: [rvalue reference, move sematics, perfect forwarding]
-categories: C++
+categories: cpp
 description: A brief illustration of c++ rvalue reference
 toc: true
 ---
@@ -18,8 +18,8 @@ rvalue references are a new reference type introduced in c++0x that help solve t
 
 ### what is rvalue and lvalue?
 
-- lvalue: those could be appeared in the left of the operator =
-- rvalue: those could only be appeared in the right of the operator =
+- lvalue: those could be appeared in the left of the `operator =`
+- rvalue: those could only be appeared in the right of the `operator =`
 
 **note:** `C++` with its user-defined types has introduced some subtleties regarding modifiability and assignability that cause this definition to be incorrect. Let us see the following samples:
 
@@ -56,7 +56,7 @@ comple<int>() = complex<int>(4, 9); //It could be assigned to a temp object!!!
 
 ### the forms of rvalue
 
-- those could only appeared in the right of the operator =
+- those could only appeared in the right of the `operator =`
 - temp object
 - return value(special form of temp object)
 
@@ -153,5 +153,5 @@ private:
 };
 ```
 
-
+### Testify it in the STL containers
 
