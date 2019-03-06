@@ -9,8 +9,6 @@ toc: true
 ---
 ## c++ rvalue reference
 
----
-
 ### why we need rvalue references?
 
 rvalue references are a new reference type introduced in c++0x that help solve the problem of **unnecessary copying** and enable **perfect forwarding**. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling **move semantics**.
