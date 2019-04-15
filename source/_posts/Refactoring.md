@@ -1,6 +1,5 @@
 ---
-layout: the
-title: [Translation]Refactoring is Refactoring - The Lifetime of Food
+title: '[Translation]Refactoring is Refactoring - The Lifetime of Food'
 date: 2019-03-06 15:53:11
 tags: rust
 keyword: [rust programming, lifetime rule, borrowing rule]

@@ -1,0 +1,50 @@
+---
+title: cpp conversion operator
+date: 2019-03-28 18:09:36
+tags: c++
+keyword: [conversion operator, temporary, temp object]
+categories: cpp
+description: A brief illustration of c++ conversion operator.
+toc: true
+---
+
+## c++ conversion operator
+
+### Introduction
+
+In C++, developer abstracts real world objects by using classes as concrete types. Sometimes it is required to convert to one concrete type to another one or primitive type implicitly. In such situations, conversion operator play a smart role. But compilers sometimes do much more in the background, which usually leads to tricks.
+
+Look at the following sample:
+
+```c++
+string str1("hello");
+string str2("wrold");
+printf("%s\n", str1 + str2);
+```
+
+
+
+### Compiler aggressive
+
+`malloc(0)`
+
+
+#### Full-expression
+
+
+
+
+
+### What is conversion operator
+
+
+
+### Why do we need it
+
+
+
+### How can we use it
+
+
+
+### 
