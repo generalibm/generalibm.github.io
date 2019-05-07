@@ -8,7 +8,7 @@ description: A small piece of note for Linux toolkit.
 toc: true
 ---
 
-After I upgraded `gcc` from *version of 4.4.7* to *version of 7.4.0* on **CentOS 6.5**, some ridiculous bugs happened when I linked my project to `gtest`. So I rebuilt `gtest` using the newer `gcc`, however, bugs remained. In the end, I found that `cmake` did not using the newer `gcc` when I typing `cmake ..` command, I guessed that was the key. 
+After I upgraded `gcc` from *version of 4.4.7* to *version of 7.4.0* on **CentOS 6.5**, some ridiculous bugs happened when I linked my project to `gtest`. So I rebuilt `gtest` using the newer `gcc`, however, bugs remained. In the end, I found that `cmake` did not use the newer `gcc` when I was typing `cmake ..` command, I guessed that was the key. 
 
 <!--more-->
 
@@ -46,7 +46,7 @@ Note that `./contrib/download_prerequisits` will download 4 packages:
 
 - isl-0.16.1.tar.bz2
 
-##### **new feature support testing**
+#### new feature support testing
 
 v7.4.0 support c++17, here is a sample from [cppreference](https://en.cppreference.com/w/cpp/utility/any).
 
@@ -149,9 +149,9 @@ set(CMAKE_CXX_COMPILER "/usr/local/bin/g++")
 
 which reminds me it is a bad idea, even though I had backed up a copy.
 
-#### idea approach
+#### ideal approach
 
-BUT, `export` is [a idea approach](https://stackoverflow.com/questions/17275348/how-to-specify-new-gcc-path-for-cmake). that is exporting system variables of `CXX` and `CC` to CMake's cache before `cmake`:
+BUT, `export` is [a ideal approach](https://stackoverflow.com/questions/17275348/how-to-specify-new-gcc-path-for-cmake). that is exporting system variables of `CXX` and `CC` to CMake's cache before `cmake`:
 
 ```bash
 export CC=/usr/local/bin/gcc 
