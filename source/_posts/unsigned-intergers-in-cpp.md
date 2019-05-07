@@ -138,6 +138,12 @@ for (int i = container.size()-1; i >= 0; i++)
 }
 
 /// or use iterator
+for (auto it = container.end() -1; it != container.begin(); it--)
+{
+    // ...
+}
+
+/// or just reverse iterator
 for (auto it = container.rbegin(); it != container.rend(); it++)
 {
     // ...
