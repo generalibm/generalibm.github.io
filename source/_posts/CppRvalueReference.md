@@ -26,9 +26,9 @@ rvalue references are a new reference type introduced in c++0x that help solve t
 int a = 9;
 int b = 4;
 
-a = b;	//OK
-b = a;	//OK
-a = a+b; //OK
+a = b;      //OK
+b = a;      //OK
+a = a + b;  //OK
 
 a + b = 12; // Error, lvalue required as left operand of assignment
 
@@ -123,7 +123,7 @@ public:
         if (this != rhs) 
         {
             m_len = rhs.m_len;
-            if (m_data) delete m_data;            
+            if (m_data) delete m_data;
             m_data = new char[m_len + 1];
             memcpy(m_data, rhs.m_data, rhs.m_len);
             m_data[m_len] = '\0';
@@ -137,7 +137,7 @@ public:
         {
             m_len = rhs.m_len;
             if (m_data) delete m_data;
-          	m_data = rhs.m_data;
+            m_data = rhs.m_data;
          
             rhs.m_len = 0;
             rhs.m_data = nullptr;
@@ -146,8 +146,8 @@ public:
     }
  
 private:
-	char * m_data; 
-	size_t m_len;
+    char * m_data; 
+    size_t m_len;
 };
 ```
 

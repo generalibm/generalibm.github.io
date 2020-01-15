@@ -25,9 +25,9 @@ toc: true
 
 ### Step 1: deploy VPN on AWS with algo
 1. Download Algo `git clone https://github.com/trailofbits/algo.git`.
-2. Download requirements 'cd Algo && python3 -m pip install --user --upgrade virtualenv && python3 -m virtualenv env && source env/bin/activate && python3 -m pip install -r requirements.txt'.
-3. Setup personal configures 'vim config.cfg' and change **users** setting in line 7 or just ignore it.
-4. Deploy Algo on AWS EC2 './algo' and then choose options `3. Amazon EC2` 
+2. Download requirements `cd Algo && python3 -m pip install --user --upgrade virtualenv && python3 -m virtualenv env && source env/bin/activate && python3 -m pip install -r requirements.txt`.
+3. Setup personal configures `vim config.cfg` and change **users** setting in line 7 or just ignore it.
+4. Deploy Algo on AWS EC2  `./algo` and then choose options `3. Amazon EC2` 
 5. Input AWS Access Key and AWS Secret Key in the CSV file that was downloaded when setup AWS account.
 6. Choose several `y`s to setup Aglo Server on AWS.
 7. Just choose America region instead of Asian, since Tokyo didnot succeed in my machine and Hongkong didnot active by default on AWS.
@@ -70,14 +70,14 @@ WireGuard works great with Linux clients. See this page for an example of how to
 
 ##### Apple Devices
 
-Inside the “configs” folder, you’ll find a .mobileconfig file. On Mac, double-click that file to install the profile on your Mac. To install the profile on an iPhone or iPad, you can either Airdrop that same file from your Mac to your iOS device, email it to yourself, or upload it to cloud service like iCloud or Dropbox and open it from there. You’ll be asked to confirm the profile installation, and from then on, you’ll be connected to that VPN. You can disconnect by simply deleting the profile.
+Inside the **configs** folder, you’ll find a .mobileconfig file. On Mac, double-click that file to install the profile on your Mac. To install the profile on an iPhone or iPad, you can either Airdrop that same file from your Mac to your iOS device, email it to yourself, or upload it to cloud service like iCloud or Dropbox and open it from there. You’ll be asked to confirm the profile installation, and from then on, you’ll be connected to that VPN. You can disconnect by simply deleting the profile.
 
 ##### Android Devices
 
 On Android, you need to first install the strongSwan VPN Client app. Then, copy the P12 file inside the Configs folder over to your Android device and open it in strongSwan. Follow the directions from there to set it up. If you need help, this guide will walk you through each part.
 
 ##### Windows
-1. Head to the “configs” folder, then copy the PEM, P12, and PS1 files to your Windows machine.
+1. Head to the **configs** folder, then copy the PEM, P12, and PS1 files to your Windows machine.
 2. Double-click the PEM file to import it to the Trusted Root certificate store.
 3. Open the Powershell application, then navigate to the folder with the files you copied in step one a second ago.
 4. Type in, Set-ExecutionPolicy Unrestricted -Scope CurrentUser and press Enter.
