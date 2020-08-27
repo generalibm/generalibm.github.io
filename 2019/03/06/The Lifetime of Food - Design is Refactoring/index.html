@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[Translation]Design is refactoring-The Lifetime of Food | Freemind</title>
+  <meta name="author" content="generalibm">
+  
+  <meta name="description" content="It is my first translation about rust programming(unfinished).">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="[Translation]Design is refactoring-The Lifetime of Food">
+  <meta property="og:site_name" content="Freemind">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Freemind</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> [Translation]Design is refactoring-The Lifetime of Food</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>It is my first translation about rust programming(unfinished).</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <h2 id="Design-is-Refactoring-The-Lifetime-of-Food"><a href="#Design-is-Refactoring-The-Lifetime-of-Food" class="headerlink" title="Design is Refactoring-The Lifetime of Food"></a><a href="http://designisrefactoring.com/2016/08/10/the-lifetime-of-food/" target="_blank" rel="noopener">Design is Refactoring-The Lifetime of Food</a></h2><p>A Rusty Analogy using Millennial Stereotypes</p>
+<p>Imagine you are out to dinner with some friends. You  are all stereotypical Millennials so photographing your meal is  expected. For every dish you order each of your friends borrows it,  takes a photograph, and then returns it to you.</p>
+<p>Well, that’s the plan anyway. Some of your friends are not the most  reliable. Will they always return the right dish to you? Will they try  to sneak a bite? Human friends are so unreliable. But if your friends  were Rust functions you’d have nothing to worry about, thanks to Rust’s  rules around borrowing and lifetimes.<br><a id="more"></a></p>
+<blockquote>
+<p>想象一下，你准备和几个朋友一起去外面吃饭，你们都是典型的<a href="https://baike.baidu.com/item/%E5%8D%83%E7%A6%A7%E4%B8%80%E4%BB%A3/2683826?fr=aladdin" target="_blank" rel="noopener">千禧年一代</a>，所以拍照是意料之中的事情。对于你点的每一道菜，他们都会拿过去拍一张， 然后再还给你。</p>
+<p>好了，这就是所谓的计划。他们之中有几个不是非常的靠得住，他们一定要把你点的还回来么?他们会吃掉几口么？人类的朋友不是非常可靠的。但是如果你的朋友是<code>Rust functions</code>,  那你就不用担心啦，这要感谢<code>Rust</code>围绕<strong>借</strong>的规则和<strong>生命周期</strong>规则。</p>
+</blockquote>
+<p>Let’s model this dinner party in Rust and see if we can learn a thing or two about borrowing and lifetimes.</p>
+<p>We’ll start off with the basics, a Dish that can be photographed.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    doro.photograph(<span class="string">"Me"</span>);</span><br><span class="line">    bruschetta.photograph(<span class="string">"Me"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++doro.photograph%28%22Me%22%29%3B%0A++++bruschetta.photograph%28%22Me%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>We have a <code>Dish</code> struct which contains a name. There’s one function on <code>Dish</code>, <code>photograph</code>. You get your dishes from the hot new Italian/Ethiopian fusion restaurant and take their pictures.</p>
+<p>Let’s introduce one of your friends. We’ll start off with your most  honest and trustworthy companion. Being honest this friend wants to  borrow a dish photograph it and return it. They don’t want you giving  them more than one dish – that could get confusing! When converted to a  Rust function, this friend looks like:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">honest_friend</span></span>(dish: &amp;Dish) &#123;</span><br><span class="line">  dish.photograph(<span class="string">"Honest Friend"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Our dinner-party now looks like:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">honest_friend</span></span>(dish: &amp;Dish) &#123;</span><br><span class="line">    dish.photograph(<span class="string">"Honest Friend"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    honest_friend(&amp;doro);</span><br><span class="line">    honest_friend(&amp;bruschetta);</span><br><span class="line"></span><br><span class="line">    doro.photograph(<span class="string">"Me"</span>);</span><br><span class="line">    bruschetta.photograph(<span class="string">"Me"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+honest_friend%28dish%3A+%26Dish%29+%7B%0A++++dish.photograph%28%22Honest+Friend%22%29%3B%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++honest_friend%28%26doro%29%3B%0A++++honest_friend%28%26bruschetta%29%3B%0A%0A++++doro.photograph%28%22Me%22%29%3B%0A++++bruschetta.photograph%28%22Me%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>Note that your friend is not explicitly returning the Dish at the end  of their function. Thanks to Rust’s borrowing rules they don’t have to.  When your friend’s scope ends, the borrow ends.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">honest_friend</span></span>(dish: &amp;Dish) &#123;      <span class="comment">//-- Borrow of the dish begins here</span></span><br><span class="line">  dish.photograph(<span class="string">"Honest Friend"</span>)   <span class="comment">// |</span></span><br><span class="line">&#125;                                   <span class="comment">//-- Borrow of the dish ends here</span></span><br></pre></td></tr></table></figure>
+<p>A new friend joins your table. This friend likes to play pranks, but  they don’t always go as expected. Your Trickster Friend says, “Loan me a  dish and I’ll give you a dish back. Trust me, I’m going to return to  you the same dish you loaned me.” You have your doubts.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend</span></span>(dish: &amp;Dish) -&gt; &amp;Dish &#123;</span><br><span class="line">    dish.photograph(<span class="string">"Incompenent Friend"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Tricks and Pranks ensue</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Is this really the same dish you loaned?</span></span><br><span class="line">    mystery_dish</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend</span></span>(dish: &amp;Dish) -&gt; &amp;Dish &#123;</span><br><span class="line">    dish.photograph(<span class="string">"Trickster Friend"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Your friend is either returning the same dish or a different one.</span></span><br><span class="line">    <span class="comment">// Try running both options by uncommenting the assignments of mystery_dish</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Option One: Returning a different one</span></span><br><span class="line">    <span class="comment">// let mystery_dish = &amp;Dish &#123; name: String::from("Pad Thai") &#125;;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Option Two: Returning the same one</span></span><br><span class="line">    <span class="comment">// let mystery_dish = dish;</span></span><br><span class="line"></span><br><span class="line">    mystery_dish</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_dish = trickster_friend(&amp;doro); </span><br><span class="line"></span><br><span class="line">    mystery_dish.photograph(<span class="string">"Me"</span>);</span><br><span class="line">    bruschetta.photograph(<span class="string">"Me"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+trickster_friend%28dish%3A+%26Dish%29+-%3E+%26Dish+%7B%0A++++dish.photograph%28%22Trickster+Friend%22%29%3B%0A%0A++++%2F%2F+Your+friend+is+either+returning+the+same+dish+or+a+different+one.%0A++++%2F%2F+Try+running+both+options+by+uncommenting+the+assignments+of+mystery_dish%0A%0A++++%2F%2F+Option+One%3A+Returning+a+different+one%0A++++%2F%2F+let+mystery_dish+%3D+%26Dish+%7B+name%3A+String%3A%3Afrom%28%22Pad+Thai%22%29+%7D%3B%0A%0A++++%2F%2F+Option+Two%3A+Returning+the+same+one%0A++++%2F%2F+let+mystery_dish+%3D+dish%3B%0A%0A++++mystery_dish%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++let+mystery_dish+%3D+trickster_friend%28%26doro%29%3B+%0A%0A++++mystery_dish.photograph%28%22Me%22%29%3B%0A++++bruschetta.photograph%28%22Me%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>Try both options and you’ll see that your trickster friend can not  prank you by giving you Pad Thai. The Pad Thai value is owned inside <code>trickster_friend</code> and is destroyed when <code>trickster_friend</code> ends. This is a bit easier to see if you inline the <code>trickster_friend</code> function into your <code>main</code> function</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = &#123;                                          <span class="comment">//-- Mystery Meal is created here </span></span><br><span class="line">      <span class="keyword">let</span> other_dish = &amp;Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Pad Thai"</span>) &#125;;  <span class="comment">// |  //-- Pad Thai is created here</span></span><br><span class="line">      other_dish                                                  <span class="comment">// |     |</span></span><br><span class="line">    &#125;                                                             <span class="comment">// |  //-- Pad Thai is destroyed here</span></span><br><span class="line">                                                                  <span class="comment">// |</span></span><br><span class="line">    me(mystery_meal)                                              <span class="comment">//-- Mystery meal lives for longer than Pad Thai,</span></span><br><span class="line">                                                                  <span class="comment">//   so it can't contain a reference to Pad Thai. </span></span><br><span class="line">                                                                  <span class="comment">//   Compiler Error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Our trickster friend shows us that if a function is going to receive and return a single borrowed reference it <em>has</em> to return the same reference it received. Even though our friend’s tricky plan failed we learned something from it!</p>
+<p>A third, very impatient friend arrives to our party. They don’t have  time for this “one plate at a time” nonsense; this friend wants you to  loan them two dishes at once:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">impatient_friend</span></span>(first_dish: &amp;Dish, second_dish: &amp;Dish) &#123;</span><br><span class="line">    first_dish.photograph(<span class="string">"Impatient Friend"</span>);</span><br><span class="line">    second_dish.photograph(<span class="string">"Impatient Friend"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">impatient_friend</span></span>(first_dish: &amp;Dish, second_dish: &amp;Dish) &#123;</span><br><span class="line">    first_dish.photograph(<span class="string">"Impatient Friend"</span>);</span><br><span class="line">    second_dish.photograph(<span class="string">"Impatient Friend"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    impatient_friend(&amp;doro, &amp;bruschetta);</span><br><span class="line"></span><br><span class="line">    doro.photograph(<span class="string">"Me"</span>);</span><br><span class="line">    bruschetta.photograph(<span class="string">"Me"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+impatient_friend%28first_dish%3A+%26Dish%2C+second_dish%3A+%26Dish%29+%7B%0A++++first_dish.photograph%28%22Impatient+Friend%22%29%3B%0A++++second_dish.photograph%28%22Impatient+Friend%22%29%3B%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++impatient_friend%28%26doro%2C+%26bruschetta%29%3B%0A%0A++++doro.photograph%28%22Me%22%29%3B%0A++++bruschetta.photograph%28%22Me%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>Just as with your honest friend, this works fine. We loan our two dishes to our impatient friend who takes their photos. When <code>impatient_friend</code> ends, so do the borrows.</p>
+<p>But your trickster friend sees this exchange and gets an idea. They  now know that they can’t return a plate of Pad Thai, but they figure  that if they borrow 2 plates and only return one, they can keep that  extra plate for themselves.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_again</span></span>(first_dish: &amp;Dish, second_dish: &amp;Dish) -&gt; &amp;Dish &#123;</span><br><span class="line">    first_dish.photograph(<span class="string">"Trickster Friend"</span>);</span><br><span class="line">    second_dish.photograph(<span class="string">"Trickster Friend"</span>);</span><br><span class="line"></span><br><span class="line">    first_dish</span><br><span class="line">    <span class="comment">//ha hah hah, I get to keep the second dish!</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = trickster_friend_again(&amp;doro, &amp;bruschetta);</span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+trickster_friend_again%28first_dish%3A+%26Dish%2C+second_dish%3A+%26Dish%29+-%3E+%26Dish+%7B%0A++++first_dish.photograph%28%22Trickster+Friend%22%29%3B%0A++++second_dish.photograph%28%22Trickster+Friend%22%29%3B%0A%0A++++first_dish%0A++++%2F%2Fha+hah+hah%2C+I+get+to+keep+the+second+dish%21%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++let+mystery_meal+%3D+trickster_friend_again%28%26doro%2C+%26bruschetta%29%3B%0A%0A++++mystery_meal.photograph%28%22Me%21%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>Foiled again! If you run that you’ll get <code>error: missing lifetime specifier</code>.</p>
+<p>Remember what we first learned from our Trickster Friend? If a  function receives and returns a single reference then it must be the  same reference, otherwise you could return something that does not live  long enough. That’s easy for the Rust compiler to check as there’s only  one option. But this function receives two references and returns one.  How does the compiler ensure that the reference you return points to a  value that lives long enough?</p>
+<p>In this particular code both our values – <code>doro</code> and <code>bruschetta</code> – live long enough. So it can be hard to see why the Rust compiler is confused. But what if we changed our code to:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = &#123;</span><br><span class="line">      <span class="keyword">let</span> herring = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Pickled Herring"</span>) &#125;;   <span class="comment">//-- Herring created here</span></span><br><span class="line">      trickster_friend_again(&amp;herring, &amp;bruschetta)                   <span class="comment">// |</span></span><br><span class="line">    &#125;                                                                 <span class="comment">//-- Herring destroyed here</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>If <code>trickster_friend_again</code> returns <code>bruschetta</code> then that code would be fine. But if it returns <code>herring</code> we’d try to photograph a dish that no longer existed. This is unsafe, so Rust won’t let us do it.</p>
+<p>If the Rust compiler ever has any questions about what reference a  function will return then that function must explicitly declare a  lifetime. Our trickster friend could declare one of four lifetimes:</p>
+<p>Option One:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_one</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;Dish) -&gt; &amp;<span class="symbol">'a</span> Dish</span><br></pre></td></tr></table></figure>
+<p>Option Two:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_two</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;Dish, second_dish: &amp;<span class="symbol">'a</span> Dish) -&gt; &amp;<span class="symbol">'a</span> Dish</span><br></pre></td></tr></table></figure>
+<p>Option Three:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_three</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;<span class="symbol">'a</span> Dish) -&gt; &amp;<span class="symbol">'a</span> Dish</span><br></pre></td></tr></table></figure>
+<p>Option Four:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_four</span></span>&lt;<span class="symbol">'a</span>, <span class="symbol">'b</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;<span class="symbol">'b</span> Dish) -&gt; &amp;<span class="symbol">'a</span> Dish</span><br></pre></td></tr></table></figure>
+<p>Let’s see the differences between those options:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Dish</span></span> &#123;</span><br><span class="line">    name: <span class="built_in">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">impl</span> Dish &#123;</span><br><span class="line">    <span class="function"><span class="keyword">fn</span> <span class="title">photograph</span></span>(&amp;<span class="keyword">self</span>, photographer: &amp;<span class="built_in">str</span>) &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">"Snap! &#123;&#125; photographed by &#123;&#125;"</span>, <span class="keyword">self</span>.name, photographer)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_lifetime_one</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;Dish) -&gt; &amp;<span class="symbol">'a</span> Dish &#123;</span><br><span class="line">    first_dish.photograph(<span class="string">"Trickster Friend"</span>);</span><br><span class="line">    second_dish.photograph(<span class="string">"Trickster Friend"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Uncomment below to try to return second_dish</span></span><br><span class="line">    <span class="comment">//second_dish</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//Comment this out when you try to return second_dish</span></span><br><span class="line">    first_dish</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = trickster_friend_lifetime_one(&amp;doro, &amp;bruschetta);</span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://play.rust-lang.org/?code=struct+Dish+%7B%0A++++name%3A+String%2C%0A%7D%0A%0Aimpl+Dish+%7B%0A++++fn+photograph%28%26self%2C+photographer%3A+%26str%29+%7B%0A++++++++println%21%28%22Snap%21+%7B%7D+photographed+by+%7B%7D%22%2C+self.name%2C+photographer%29%0A++++%7D%0A%7D%0A%0Afn+trickster_friend_lifetime_one%3C%27a%3E%28first_dish%3A+%26%27a+Dish%2C+second_dish%3A+%26Dish%29+-%3E+%26%27a+Dish+%7B%0A++++first_dish.photograph%28%22Trickster+Friend%22%29%3B%0A++++second_dish.photograph%28%22Trickster+Friend%22%29%3B%0A%0A++++%2F%2FUncomment+below+to+try+to+return+second_dish%0A++++%2F%2Fsecond_dish%0A%0A++++%2F%2FComment+this+out+when+you+try+to+return+second_dish%0A++++first_dish%0A%7D%0A%0Afn+main%28%29+%7B%0A++++let+doro+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Doro+Wat%22%29+%7D%3B%0A++++let+bruschetta+%3D+Dish+%7B+name%3A+String%3A%3Afrom%28%22Bruschetta%22%29+%7D%3B%0A%0A++++let+mystery_meal+%3D+trickster_friend_lifetime_one%28%26doro%2C+%26bruschetta%29%3B%0A%0A++++mystery_meal.photograph%28%22Me%21%22%29%3B%0A%7D" target="_blank" rel="noopener">Run</a></p>
+<p>In this example we’ve declared one lifetime, given it to the reference passed to <code>first_dish</code> and our return value. Trickster friend now <em>must</em> return first_dish.</p>
+<p>Let’s try the <code>herring</code> code again:</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_lifetime_one</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;Dish) -&gt; &amp;<span class="symbol">'a</span> Dish &#123;</span><br><span class="line">    first_dish</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = &#123;</span><br><span class="line">      <span class="keyword">let</span> herring = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Pickled Herring"</span>) &#125;;   <span class="comment">//-- Herring created here</span></span><br><span class="line">      trickster_friend_lifetime_one(&amp;doro, &amp;herring)                  <span class="comment">// |  this will always return doro</span></span><br><span class="line">    &#125;                                                                 <span class="comment">//-- Herring destroyed here</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Using our current Trickster Friend this code will compile, because there is no way that <code>mystery_meal</code> will ever be <code>herring</code>.</p>
+<p>Option Two is the inverse of Option One. The function must now return the <code>second_dish</code>. If we pass in <code>herring</code> as the first dish, our code still runs.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_two</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;Dish, second_dish: &amp;<span class="symbol">'a</span> Dish) -&gt; &amp;<span class="symbol">'a</span> Dish &#123;</span><br><span class="line">  second_dish</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = &#123;</span><br><span class="line">      <span class="keyword">let</span> herring = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Pickled Herring"</span>) &#125;;   <span class="comment">//-- Herring created here</span></span><br><span class="line">      trickster_friend_lifetime_two(&amp;herring, &amp;doro)                  <span class="comment">// |   this will always return &amp;doro</span></span><br><span class="line">    &#125;                                                                 <span class="comment">//-- Herring destroyed here</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Option Three gives the same lifetime to both parameters so the  function could return either of them. Our herring code will fail to  compile regardless of parameter order because <code>mystery_meal</code> could be bound to a destroyed value.</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">trickster_friend_option_three</span></span>&lt;<span class="symbol">'a</span>&gt;(first_dish: &amp;<span class="symbol">'a</span> Dish, second_dish: &amp;<span class="symbol">'a</span> Dish) -&gt; &amp;<span class="symbol">'a</span> Dish &#123;</span><br><span class="line">  <span class="comment">// logic to determine if first_dish or second_dish is returned</span></span><br><span class="line">  dish_to_return</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">main</span></span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> doro = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Doro Wat"</span>) &#125;;</span><br><span class="line">    <span class="keyword">let</span> bruschetta = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Bruschetta"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> mystery_meal = &#123;</span><br><span class="line">      <span class="keyword">let</span> herring = Dish &#123; name: <span class="built_in">String</span>::from(<span class="string">"Pickled Herring"</span>) &#125;;   <span class="comment">//-- Herring created here</span></span><br><span class="line">      trickster_friend_lifetime_three(&amp;herring, &amp;doro)                <span class="comment">// |   this could return doro or herring</span></span><br><span class="line">    &#125;                                                                 <span class="comment">//-- Herring destroyed here</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    mystery_meal.photograph(<span class="string">"Me!"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In our dinner party Option Four is functionally the same as Option  One. We’ve declared two lifetimes but we’re never using the second one  making it irrelevant. I’m sure there are times when having two lifetimes  on a function is useful, but I haven’t come across them. <a href="https://doc.rust-lang.org/book/lifetimes.html#multiple-lifetimes" target="_blank" rel="noopener">The book says you can have multiple lifetimes, but don’t explain why</a>. I’d love to know more about this.</p>
+<p>Is there more to lifetimes than this? Almost certainly. But I hope  that this analogy helps you grasp the fundamentals of why Rust has  lifetimes. If you want to learn more about fundamentals of Rust, maybe  read one of my earlier posts, <a href="http://designisrefactoring.com/2016/04/01/rust-via-its-core-values/" target="_blank" rel="noopener">Rust via its Core Values</a>. I also suggest the <a href="http://www.newrustacean.com/" target="_blank" rel="noopener">New Rustacean</a> podcast, which has helped me understand quite a lot about Rust.</p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2019/03/03/What I have learnt from the Dissertation of Danqi/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2019-03-06 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/cpp/">cpp<span>5</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/rust/">rust<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Design-is-Refactoring-The-Lifetime-of-Food"><span class="toc-article-text">Design is Refactoring-The Lifetime of Food</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2020 generalibm
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

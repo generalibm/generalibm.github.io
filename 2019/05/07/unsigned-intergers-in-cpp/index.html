@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>unsigned integers in cpp | Freemind</title>
+  <meta name="author" content="generalibm">
+  
+  <meta name="description" content="A brief illustration of c++ unsigned integers.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="unsigned integers in cpp">
+  <meta property="og:site_name" content="Freemind">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Freemind</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> unsigned integers in cpp</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>A brief illustration of c++ unsigned integers.</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, an <strong>integer overflow</strong> occurs when an <a href="https://en.wikipedia.org/wiki/Arithmetic" target="_blank" rel="noopener">arithmetic</a>  operation attempts to create a numeric value that is outside of the  range that can be represented with a given number of digits – either  larger than the maximum or lower than the minimum representable value. </p>
+<p>The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to <em>wrap</em> around the maximum (i.e. <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" target="_blank" rel="noopener">modulo</a> a power of the <a href="https://en.wikipedia.org/wiki/Radix" target="_blank" rel="noopener">radix</a>, usually two in modern computers, but sometimes ten or another radix). </p>
+<p>An overflow condition may give results leading to unintended  behavior. In particular, if the possibility has not been anticipated,  overflow can compromise a program’s reliability and <a href="https://en.wikipedia.org/wiki/Software_security" target="_blank" rel="noopener">security</a>. </p>
+<a id="more"></a>
+<h3 id="Unsigned-integer-range"><a href="#Unsigned-integer-range" class="headerlink" title="Unsigned integer range"></a>Unsigned integer range</h3><p>We all know that <code>c++</code> supports both <strong>signed integer</strong> and <strong>unsigned integer</strong>, the most regular example would be:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// the usage of signed integer with 4-bytes.</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; container.size(); i++)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">// do something    </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// the usage of unsigned integer with 4-bytes.</span></span><br><span class="line"><span class="comment">/// why do developer do in this way for that `size()` returns a unsigned type</span></span><br><span class="line"><span class="comment">/// and size_t is actually a typedef of unsigned type in cpp</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; container.size(); i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Both of them would be behaving well. If we need a bigger number, we would use more bytes to present it </p>
+<table>
+<thead>
+<tr>
+<th>size/type</th>
+<th>range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 byte unsigned</td>
+<td>0 to 255</td>
+</tr>
+<tr>
+<td>2 byte unsigned</td>
+<td>0 to 65,535</td>
+</tr>
+<tr>
+<td>4 byte unsigned</td>
+<td>0 to 4,294,967,295</td>
+</tr>
+<tr>
+<td>8 byte unsigned</td>
+<td>0 to18,446,744,073,709,551,615</td>
+</tr>
+</tbody>
+</table>
+<p>An n-bit unsigned variable has a range of 0 to (2^n)-1.</p>
+<h3 id="Unsigned-integer-overflow"><a href="#Unsigned-integer-overflow" class="headerlink" title="Unsigned integer overflow"></a>Unsigned integer overflow</h3><p>But when we traverse a container in reversed direction, would it properly behave as we expected?</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// signed integer example</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = container.size()<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// unsigned integer example</span></span><br><span class="line"><span class="comment">// dead loop here</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = container.size()<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do somthing</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>No, when we traverse a container in reversed direction with <strong>unsigned integer</strong>, it would cause <strong>dead loop</strong>.</p>
+<h4 id="Overflow-reasons"><a href="#Overflow-reasons" class="headerlink" title="Overflow reasons"></a>Overflow reasons</h4><p>Why would it cause dead loop, but <strong>signed integer</strong> would not? Actually dead loop usually can not be caught easily, because the program does not raise any intuitive marks. But, we could check the log or debug it step by step or set break points just in your new codes(<a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">TDD</a> suggests you do like this, and it usually works). </p>
+<p>Here, we simplify it like:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">5</span>; i &gt;=<span class="number">0</span>; i--)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"i = "</span> &lt;&lt; i &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> j = <span class="number">5</span>; j &gt;=<span class="number">0</span>; j--)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"j = "</span> &lt;&lt; j &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>we might get(run on x64):</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">i = 5</span><br><span class="line">i = 4</span><br><span class="line">i = 3</span><br><span class="line">i = 2</span><br><span class="line">i = 1</span><br><span class="line">i = 0 </span><br><span class="line">j = 5</span><br><span class="line">j = 4</span><br><span class="line">j = 3</span><br><span class="line">j = 2</span><br><span class="line">j = 1</span><br><span class="line">j = 0</span><br><span class="line">j = 18446744073709551615</span><br><span class="line">j = 18446744073709551614</span><br><span class="line">j = 18446744073709551613</span><br><span class="line">j = 18446744073709551612</span><br><span class="line">j = 18446744073709551611</span><br><span class="line">j = 18446744073709551610</span><br><span class="line">j = 18446744073709551609</span><br><span class="line">j = 18446744073709551608</span><br><span class="line">j = 18446744073709551607</span><br><span class="line">j = 18446744073709551606</span><br><span class="line">...</span><br><span class="line">j = 0</span><br><span class="line">j = 18446744073709551615</span><br><span class="line">j = 18446744073709551614</span><br><span class="line">...</span><br><span class="line">j = 0</span><br><span class="line">j = 18446744073709551615</span><br><span class="line">j = 18446744073709551614</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>the first loop stopped because <code>i</code> reached <code>-1</code>, while<code>j</code> is always positive number as a <strong>unsigned type</strong>. It will not be less than <code>0</code>, so the program did not stopped. </p>
+<p><code>size_t</code> is a typedef of <code>long unsigned int</code>and we found that it would reach to the biggest 8-bytes unsigned integer(run on x64) and then decrease to 0 then repeat it again and again. The reason is that a unsigned integer will be represented by the type simply “wraps around”(sometimes called “modulo wrapping”) when it is “overflow”(not real overflow, since the ISO standard states that for unsigned integers modulo wrapping is the defined behavior and the term overflow never applies:”a computation involving unsigned operands can never overflow.”). </p>
+<p>That is when we try to store the number <code>-1</code>(which requires 9 bytes to represent) in a 8-byte unsigned integer, it would not overflow. Instead, if a value is out of range, it is divided by one greater than the largest number of the type, and only the remainder kept. The number <code>-1</code> it too less to fit in our 8-byte range of <code>0</code> to <code>18,446,744,073,709,551,615</code>. <code>1</code>greater than the largest number of type is <code>18,446,744,073,709,551,616</code>, therefore, we divide <code>-1</code> by <code>18,446,744,073,709,551,616</code>, getting <code>1</code> remainder <code>18,446,744,073,709,551,615</code>, the remainder of <code>18,446,744,073,709,551,615</code> is what is stored.</p>
+<p>When we store the number <code>280</code>(which requires 9 bits to represent) in a 8-bits unsigned integer, it would also not overflow. <code>280</code> is greater than <code>255</code>(the largest number of 8-bits unsigned type). <code>1</code> greater than <code>255</code> is <code>256</code>, so we divide <code>280</code> by <code>256</code>, getting <code>1</code> remainder <code>24</code> which would be stored. </p>
+<p>When we figure out the quiz, the solution may be simple, DO NOT use unsigned type when traverse a container with reverse direction.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// always use signed type when traverse with reverse direction</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = container.size()<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// or use iterator</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> it = container.end() <span class="number">-1</span>; it != container.begin(); it--)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// or just reverse iterator</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span> it = container.rbegin(); it != container.rend(); it++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In common language, <strong>unsigned integer wrap around</strong> is sometimes incorrectly called “overflow” since the cause is identical to signed integer overflow which is undefine behavior in ISO standard. </p>
+<h3 id="Other-overflow-examples"><a href="#Other-overflow-examples" class="headerlink" title="Other overflow examples"></a>Other overflow examples</h3><p>Many notable bugs in video game history happened due to wrap around behavior with unsigned integers.<br>In the arcade game Donkey Kong, it’s not possible to go past level 22 due to an bug that leaves the user with not enough bonus time to complete the level.<br>In the PC game Civilization, Gandhi was known for being the first one to use nuclear weapons, which seems contrary to his normally passive nature. Gandhi’s aggression setting was normally set at 1, but if he went democratic, he’d get a -2 modifier. This wrapped around his aggression setting to 255, making him maximally aggressive!</p>
+<h3 id="The-controversy-over-unsigned-numbers"><a href="#The-controversy-over-unsigned-numbers" class="headerlink" title="The controversy over unsigned numbers"></a>The controversy over unsigned numbers</h3><p>Many developers (and some large development houses, such as Google)  believe that developers should generally avoid unsigned integers.</p>
+<p>This is largely because of two behaviors that can cause problems.</p>
+<p>First, consider the subtraction of two unsigned numbers, such as 3  and 5.  3 minus 5 is -2, but -2 isn’t representable as an unsigned  number.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> x = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> y = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; x-y &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>; <span class="comment">// 4294967294</span></span><br></pre></td></tr></table></figure>
+<p>The occurs due to <code>-2</code> wrapping around to a number close to the top of the range of a 4-byte integer.</p>
+<p>Second, unexpected behavior can result when you mix signed and  unsigned integers.  In the above example, even if one of the operands (x  or y) is signed, the same behavior will result!</p>
+<p>Consider the following snippet:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fun(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The author of fun() was expecting someone to call this  function with only positive numbers.  But the caller is passing in <em>-1</em>.  What happens in this case?</p>
+<p>The signed argument of <em>-1</em> gets implicitly converted to an  unsigned parameter.  <em>-1</em> isn’t in the range of an unsigned number, so it  wraps around to some large number (probably <code>4294967295</code>).  Then the program goes ballistic.  Worse, there’s no good way to guard against  this condition from happening.  C++ will freely convert between signed  and unsigned numbers, but it won’t do any range checking to make sure  you don’t overflow your type.</p>
+<p>Many modern programming languages (such as Java and C#) either don’t include unsigned types, or limit their use. Python would raise a exception.</p>
+<p><strong>Bjarne Stroustrup</strong>,  the designer of C++, said, “Using an <code>unsigned</code> instead of an <code>int</code> to gain one more bit to represent positive integers is almost never a good idea”.</p>
+<p>Unfortunately, due to some poor design choices in the C++ standard  library, completely avoiding unsigned numbers in C++ isn’t possible at  this point in time.</p>
+<p>Warning</p>
+<blockquote>
+<p>  Avoid unsigned numbers whenever possible.  Don’t avoid negative  numbers by using unsigned types.  If you need a larger range, use a  larger signed type.If you do use unsigned numbers, take care not to mix signed and unsigned numbers.</p>
+</blockquote>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2020/01/15/SetupVPNonAWS/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2019-05-07 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/cpp/">cpp<span>5</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Unsigned-integer-range"><span class="toc-article-text">Unsigned integer range</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Unsigned-integer-overflow"><span class="toc-article-text">Unsigned integer overflow</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#Overflow-reasons"><span class="toc-article-text">Overflow reasons</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Other-overflow-examples"><span class="toc-article-text">Other overflow examples</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#The-controversy-over-unsigned-numbers"><span class="toc-article-text">The controversy over unsigned numbers</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2020 generalibm
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

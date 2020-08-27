@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>C++ rvalue reference | Freemind</title>
+  <meta name="author" content="generalibm">
+  
+  <meta name="description" content="A brief illustration of c++ rvalue reference">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="C++ rvalue reference">
+  <meta property="og:site_name" content="Freemind">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Freemind</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> C++ rvalue reference</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>A brief illustration of c++ rvalue reference</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <h2 id="c-rvalue-reference"><a href="#c-rvalue-reference" class="headerlink" title="c++ rvalue reference"></a>c++ rvalue reference</h2><h3 id="why-we-need-rvalue-references"><a href="#why-we-need-rvalue-references" class="headerlink" title="why we need rvalue references?"></a>why we need rvalue references?</h3><p>rvalue references are a new reference type introduced in c++0x that help solve the problem of <strong>unnecessary copying</strong> and enable <strong>perfect forwarding</strong>. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling <strong>move semantics</strong>.<br><a id="more"></a></p>
+<h3 id="what-is-rvalue-and-lvalue"><a href="#what-is-rvalue-and-lvalue" class="headerlink" title="what is rvalue and lvalue?"></a>what is rvalue and lvalue?</h3><ul>
+<li>lvalue: those could be appeared in the left of the <code>operator =</code></li>
+<li>rvalue: those could only be appeared in the right of the <code>operator =</code></li>
+</ul>
+<p><strong>note:</strong> <code>C++</code> with its user-defined types has introduced some subtleties regarding modifiability and assignability that cause this definition to be incorrect. Let us see the following samples:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// sample 1</span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">a = b;      <span class="comment">//OK</span></span><br><span class="line">b = a;      <span class="comment">//OK</span></span><br><span class="line">a = a + b;  <span class="comment">//OK</span></span><br><span class="line"></span><br><span class="line">a + b = <span class="number">12</span>; <span class="comment">// Error, lvalue required as left operand of assignment</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 2</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">s1 + s2 = s2; <span class="comment">// It is OK, how surprising!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s1 = "</span> &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s1 = hello</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s2 = "</span> &lt;&lt; s2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s2 = world</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>() = <span class="string">"Hello World"</span>; <span class="comment">// It could be assigned to a temp object!!!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 3</span></span><br><span class="line">comple&lt;<span class="keyword">int</span>&gt; c1(<span class="number">3</span>, <span class="number">8</span>), c2(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">c1 + c2 = comple&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>);  <span class="comment">//OK, c1 + c2 could be as lvalue!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c1 = "</span> &lt;&lt; c1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c1 = (3,8)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c2 = "</span> &lt;&lt; c2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c2 = (1,0)</span></span><br><span class="line"></span><br><span class="line">comple&lt;<span class="keyword">int</span>&gt;() = <span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>); <span class="comment">//It could be assigned to a temp object!!!</span></span><br></pre></td></tr></table></figure>
+<h3 id="the-forms-of-rvalue"><a href="#the-forms-of-rvalue" class="headerlink" title="the forms of rvalue"></a>the forms of rvalue</h3><ul>
+<li>those could only appeared in the right of the <code>operator =</code></li>
+<li>temp object</li>
+<li>return value(special form of temp object)</li>
+</ul>
+<p><strong>note:</strong> It would lose some import information of object(especial for rvalue) in call hierarchy. The following is a sample.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="keyword">int</span> &amp; i)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(<span class="keyword">int</span> &amp;&amp; i)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">forward</span><span class="params">(<span class="keyword">int</span> &amp;&amp; i)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    process(i);<span class="comment">// unperfect forwarding</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="What-is-perfect-forwarding"><a href="#What-is-perfect-forwarding" class="headerlink" title="What is perfect forwarding?"></a>What is perfect forwarding?</h3><p>Perfect forwarding allows you to write a single function template that takes n arbitrary arguments and forwards them transparently to another arbitrary function. The nature of argument(modifiable, const, lvalue, or rvalue) is preserved in this forwarding process. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T1, <span class="keyword">typename</span> T2&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">functionA</span><span class="params">(T1 &amp;&amp; t1, T2 &amp;&amp; t2)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    functionB(<span class="built_in">std</span>::forward&lt;T1&gt;(t1), </span><br><span class="line">              <span class="built_in">std</span>::forward&lt;T2&gt;(t2));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Implementation-of-moveable-aware-class"><a href="#Implementation-of-moveable-aware-class" class="headerlink" title="Implementation of moveable aware class"></a>Implementation of moveable aware class</h3><p>A  class with awareness have to implement the big 5, which support <strong>move semantics</strong>. And the <strong>move constructor</strong> and the <strong>destructor</strong> should be guaranteed  without throw, while <strong>copy constructor</strong> behaves as deep copy.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mystring</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ~Mystring()  </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="keyword">if</span> (m_data) <span class="keyword">delete</span> m_data; </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Mystring() </span><br><span class="line">    : m_data(<span class="literal">nullptr</span>)</span><br><span class="line">    , m_len(<span class="number">0</span>)</span><br><span class="line">    &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    Mystring(<span class="keyword">const</span> Mystring &amp; rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        m_len = rhs.m_len;</span><br><span class="line">        m_data = <span class="keyword">new</span> <span class="keyword">char</span>[m_len + <span class="number">1</span>];</span><br><span class="line">        <span class="built_in">memcpy</span>(m_data, rhs.m_data, rhs.m_len);</span><br><span class="line">        m_data[m_len] = <span class="string">'\0'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Mystring(<span class="keyword">const</span> Mystring &amp;&amp; rhs) <span class="keyword">noexcept</span> <span class="comment">// noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        m_data = rhs.m_data;</span><br><span class="line">        m_len = rhs.m_len;</span><br><span class="line">        </span><br><span class="line">        rhs.m_len = <span class="number">0</span>;</span><br><span class="line">        rhs.m_data = <span class="literal">nullptr</span>;<span class="comment">// when rvalue is a temp object, the dctor will be called while it leaves the efficetive domain(eg: as a function parameter)</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Mystring &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Mystring &amp; rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != rhs) </span><br><span class="line">        &#123;</span><br><span class="line">            m_len = rhs.m_len;</span><br><span class="line">            <span class="keyword">if</span> (m_data) <span class="keyword">delete</span> m_data;</span><br><span class="line">            m_data = <span class="keyword">new</span> <span class="keyword">char</span>[m_len + <span class="number">1</span>];</span><br><span class="line">            <span class="built_in">memcpy</span>(m_data, rhs.m_data, rhs.m_len);</span><br><span class="line">            m_data[m_len] = <span class="string">'\0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    Mystring &amp; <span class="keyword">operator</span>=(<span class="keyword">const</span> Mystring &amp;&amp; rhs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != rhs)</span><br><span class="line">        &#123;</span><br><span class="line">            m_len = rhs.m_len;</span><br><span class="line">            <span class="keyword">if</span> (m_data) <span class="keyword">delete</span> m_data;</span><br><span class="line">            m_data = rhs.m_data;</span><br><span class="line">         </span><br><span class="line">            rhs.m_len = <span class="number">0</span>;</span><br><span class="line">            rhs.m_data = <span class="literal">nullptr</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">char</span> * m_data; </span><br><span class="line">    <span class="keyword">size_t</span> m_len;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Testify-it-in-the-STL-containers"><a href="#Testify-it-in-the-STL-containers" class="headerlink" title="Testify it in the STL containers"></a>Testify it in the STL containers</h3>	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2019/03/03/What I have learnt from the Dissertation of Danqi/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2019/01/30/TCG/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2019-02-14 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/cpp/">cpp<span>5</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/c-2-0/">c++2.0<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#c-rvalue-reference"><span class="toc-article-text">c++ rvalue reference</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#why-we-need-rvalue-references"><span class="toc-article-text">why we need rvalue references?</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#what-is-rvalue-and-lvalue"><span class="toc-article-text">what is rvalue and lvalue?</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#the-forms-of-rvalue"><span class="toc-article-text">the forms of rvalue</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#What-is-perfect-forwarding"><span class="toc-article-text">What is perfect forwarding?</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Implementation-of-moveable-aware-class"><span class="toc-article-text">Implementation of moveable aware class</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Testify-it-in-the-STL-containers"><span class="toc-article-text">Testify it in the STL containers</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2020 generalibm
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+  <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
+  </script>
+
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>
