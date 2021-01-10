@@ -1,8 +1,8 @@
 ---
-title: unsigned integers in cpp
+title: Unsigned integers in cpp
 date: 2019-05-07 10:23:38
 tags: cpp
-categories: cpp
+categories: Tech
 keyword: [unsigned integers, wraps around, modulo wrapping, overflow]
 description: A brief illustration of c++ unsigned integers.
 toc: true

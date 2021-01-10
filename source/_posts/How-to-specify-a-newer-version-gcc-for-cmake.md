@@ -1,8 +1,8 @@
 ---
 title: How to specify a newer version gcc for cmake
 date: 2019-04-10 09:46:49
-tags: Linux
-categories: cpp
+tags: [linux, gcc, gdb]
+categories: Tech
 keyword: [gcc, cmake, gdb]
 description: A small piece of note for Linux toolkit.
 toc: true

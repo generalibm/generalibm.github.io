@@ -1,15 +1,14 @@
 ---
-title: Commemorate My Grandpa
+title: Eulogy for My Grandpa
 date: 2018-04-07 01:02:44
-tags: [grandpa]
+tags: [Eulogy]
 categories: rumination
 description: It is a huge change to my family.
-keywords: [grandpa, commemorate]
+keywords: [Eulogy]
 feature: 
 toc: true
 ---
-### commemorate my grandpa
-Recently, a lot of changes happened to me.
+### Eulogy for My Grandpa
 
 <!--more-->
 

@@ -1,5 +1,5 @@
 ---
-title: '[translation] High-Performance Server Architecture'
+title: '[Translation] High-Performance Server Architecture'
 date: 2019-01-28 23:31:59
 tags: [High-Performance]
 categories: translation

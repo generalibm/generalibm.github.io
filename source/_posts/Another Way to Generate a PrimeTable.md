@@ -2,7 +2,7 @@
 title: Another Way To Generate A Prime Table
 date: 2016-12-23 03:29:22
 tags:
-categories: Algorithm
+categories: Tech
 ---
 
 ```c++

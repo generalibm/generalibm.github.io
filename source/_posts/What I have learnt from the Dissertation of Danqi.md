@@ -33,8 +33,7 @@ The paper is trying to build computer systems to read a passage of text and answ
 
 Before going to Tsinghua, she studied in [Yali](https://en.wikipedia.org/wiki/Yali_High_School) Changsha, in which she presented [plug-like dynamic programming](https://cs.stanford.edu/~danqi/misc/dynamic-programming.pdf) and [CDQ's divide-and-conquer](https://cs.stanford.edu/~danqi/misc/divide-and-conquer.pdf) .
 
-After studying in Tsinghua, she went to Stanford. Now she currently visiting Facebook AI Research (Seattle) and University of Washington. And she will be joining the Computer Science Department at Princeton University as an 
-assistant professor in Fall 2019.
+After studying in Tsinghua, she went to Stanford. Now she currently visiting Facebook AI Research (Seattle) and University of Washington. And she will be joining the Computer Science Department at Princeton University as an assistant professor in Fall 2019.
 
 ### What I have learnt
 
@@ -64,5 +63,3 @@ I did a lot of reading comprehensions during the school time, both English and C
 So secondly, what I learnt from it is that to try to write things down in simple way, which is what I am doing, this paper is just a kind of timely rain in my almost dry land.
 
 And thirdly, I knew that a doctor dissertation is not easy and also not difficult for me, and I know what it should cover from the outline and something else even though I am trying to be a doctor. If I have a chance, I will not afraid of it.
-
-Last but not least, I hope I could have opportunity to implement/prove/check out her ideas one day.

@@ -1,9 +1,9 @@
 ---
-title: '[Translation]Design is refactoring-The Lifetime of Food'
+title: '[Translation] Design is refactoring-The Lifetime of Food'
 date: 2019-03-06 16:53:28
-tags: rust
+tags: [rust, lifetime rule, borrowing rule]
 keyword: [rust, lifetime rule, borrowing rule]
-categories: cpp
+categories: translation
 description: It is my first translation about rust programming(unfinished).
 toc: true
 ---

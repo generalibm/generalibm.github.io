@@ -1,9 +1,9 @@
 ---
 title: C++ rvalue reference
 date: 2019-02-14 18:46:35
-tags: c++2.0
+tags: cpp2.0
 keyword: [rvalue reference, move sematics, perfect forwarding]
-categories: cpp
+categories: Tech
 description: A brief illustration of c++ rvalue reference
 toc: true
 ---

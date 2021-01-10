@@ -1,8 +1,8 @@
 ---
-title: Illustrate ProtoBuf
+title: Protobuf 101
 date: 2016-03-16 03:33:18
 tags: protobuf
-categories: opensource
+categories: Tech
 toc: true
 ---
 
@@ -71,12 +71,6 @@ message AddressBook {
 3 . 文件`writer.cc`
 
 ```c++
- /**
-  * @file    writer.cc
-  * @author  Home Jang(generalibm@gmail.com)
-  * @date    2016-06-12 19:52:22
-  */
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -173,12 +167,6 @@ int main(int argc, char *argv[])
 4 . 文件`reader.cc`
 
 ```c++
- /**
-  * @file    reader.cc
-  * @author  Home Jang(generalibm@gmail.com)
-  * @date    2016-06-13 00:26:43
-  */
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -288,12 +276,6 @@ protoc -I=./ --cpp_out=./ ./lm.helloword.proto
 ```
 3．编写writer.cc
 ```c++
- /**
-  * @file    writer.cc
-  * @author  Home Jang(generalibm@gmail.com)
-  * @date    2016-06-13 16:04:02
-  */
-
 #include <iostream>
 #include <fstream>
 
@@ -324,12 +306,6 @@ int main()
 ```
 4．编写reader.cc
 ```c++
- /**
-  * @file    reader.cc
-  * @author  Home Jang(generalibm@gmail.com)
-  * @date    2016-06-12 18:08:34
-  */
-
 #include "lm.helloworld.pb.h"
 
 #include <iostream>

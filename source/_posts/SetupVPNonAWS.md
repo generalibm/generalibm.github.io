@@ -1,13 +1,13 @@
 ---
-title: Setup VPN on AWS
+title: Deploy VPN on AWS
 date: 2020-01-15 11:48:28
 tags: [VPN]
-categories: cpp
+categories: Tech
 description: The simplist way to setup a VPN in 15 minutes.
 toc: true
 ---
 
-## Setup VPN on AWS
+## Deploy VPN on AWS
 
 [Algo](https://github.com/trailofbits/algo) provides an opportunity to setup personal VPN easily, which allows people to deploy personal VPN sever on AWS for 1 year freely.
 
