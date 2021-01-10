@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>cpp | A creative expression</title>
+  <title>Tech | A creative expression</title>
   <meta name="author" content="generalibm">
   
   
@@ -94,7 +94,7 @@
 
 <!-- title -->
 <div class="page-header page-header-inverse ">
-  <h1 class="archive-title-tag title title-inverse ">cpp</h1>
+  <h1 class="archive-title-category title title-inverse ">Tech</h1>
 </div>
 
 <div class="row page">
@@ -108,6 +108,27 @@
       
          <!-- display as entry -->
 	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2020-01-15 </div>
+			<div class="article-title"><a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes.">Deploy VPN on AWS</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="Deploy-VPN-on-AWS"><a href="#Deploy-VPN-on-AWS" class="headerlink" title="Deploy VPN on AWS"></a>Deploy VPN on AWS</h2><p><a href="https://github.com/trailofbits/algo" target="_blank" rel="noopener">Algo</a> provides an opportunity to setup personal VPN easily, which allows people to deploy personal VPN sever on AWS for 1 year freely.</p>
+	
+	</div>
+  <a type="button" href="/2020/01/15/SetupVPNonAWS/#more" class="btn btn-default more">Read More</a>
+</div>
+
 	       
 		     
 	
@@ -132,12 +153,85 @@
 </div>
 
 	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2019-04-10 </div>
+			<div class="article-title"><a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" title="A small piece of note for Linux toolkit.">How to specify a newer version gcc for cmake</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>After I upgraded <code>gcc</code> from <em>version of 4.4.7</em> to <em>version of 7.4.0</em> on <strong>CentOS 6.5</strong>, some ridiculous bugs happened when I linked my project to <code>gtest</code>. So I rebuilt <code>gtest</code> using the newer <code>gcc</code>, however, bugs remained. In the end, I found that <code>cmake</code> did not use the newer <code>gcc</code> when I was typing <code>cmake ..</code> command, I guessed that was the key. </p>
+	
+	</div>
+  <a type="button" href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2019-02-14 </div>
+			<div class="article-title"><a href="/2019/02/14/CppRvalueReference/" title="A brief illustration of c++ rvalue reference">C++ rvalue reference</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="c-rvalue-reference"><a href="#c-rvalue-reference" class="headerlink" title="c++ rvalue reference"></a>c++ rvalue reference</h2><h3 id="why-we-need-rvalue-references"><a href="#why-we-need-rvalue-references" class="headerlink" title="why we need rvalue references?"></a>why we need rvalue references?</h3><p>rvalue references are a new reference type introduced in c++0x that help solve the problem of <strong>unnecessary copying</strong> and enable <strong>perfect forwarding</strong>. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling <strong>move semantics</strong>.<br>
+	
+	</p></div>
+  <a type="button" href="/2019/02/14/CppRvalueReference/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-12-23 </div>
+			<div class="article-title"><a href="/2016/12/23/Another Way to Generate a PrimeTable/">Another Way To Generate A Prime Table</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalculatePrimesUpTo</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">   ::<span class="built_in">std</span>::fill(is_prime_, is_prime_ + is_prime_size_, <span class="literal">true</span>);</span><br><span class="line">   is_prime_[<span class="number">0</span>] = is_prime_[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= max; i++) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!is_prime_[i]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Marks all multiples of i (except i itself) as non-prime.</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>*i; j &lt;= max; j += i) &#123;</span><br><span class="line">       is_prime_[j] = <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+	
+	</div>
+  <a type="button" href="/2016/12/23/Another Way to Generate a PrimeTable/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
 	     </div>
 	     <div>
 	       <center>
 	         <div class="pagination">
 <ul class="pagination">
 	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/categories/Tech/page/2/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
 </ul>
 </div>
 
@@ -180,35 +274,35 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
+			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
 		
-			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+		
+			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
+		
+			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
 			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
 		
 			<li><a href="/tags/rust/">rust<span>1</span></a></li>
 		
-			<li><a href="/tags/AI/">AI<span>1</span></a></li>
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
 		
 			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
 		
-			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
-		
-			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
-		
-			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
 		
 			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
 		
-			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
+			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
 		
 			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
-		
-			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
+			<li><a href="/tags/AI/">AI<span>1</span></a></li>
 		
 		 
 		</ul>

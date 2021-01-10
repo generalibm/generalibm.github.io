@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Algorithm | A creative expression</title>
+  <title>lifetime rule | A creative expression</title>
   <meta name="author" content="generalibm">
   
   
@@ -94,7 +94,7 @@
 
 <!-- title -->
 <div class="page-header page-header-inverse ">
-  <h1 class="archive-title-category title title-inverse ">Algorithm</h1>
+  <h1 class="archive-title-tag title title-inverse ">lifetime rule</h1>
 </div>
 
 <div class="row page">
@@ -113,8 +113,8 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
-			<div class="date"> 2016-12-23 </div>
-			<div class="article-title"><a href="/2016/12/23/Another Way to Generate a PrimeTable/">Another Way To Generate A Prime Table</a></div>						
+			<div class="date"> 2019-03-06 </div>
+			<div class="article-title"><a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished).">[Translation] Design is refactoring-The Lifetime of Food</a></div>						
 		</h3>
 	
 
@@ -123,10 +123,12 @@
   <div class="row">
 	
 	
-		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalculatePrimesUpTo</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">   ::<span class="built_in">std</span>::fill(is_prime_, is_prime_ + is_prime_size_, <span class="literal">true</span>);</span><br><span class="line">   is_prime_[<span class="number">0</span>] = is_prime_[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= max; i++) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!is_prime_[i]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Marks all multiples of i (except i itself) as non-prime.</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>*i; j &lt;= max; j += i) &#123;</span><br><span class="line">       is_prime_[j] = <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+		<h2 id="Design-is-Refactoring-The-Lifetime-of-Food"><a href="#Design-is-Refactoring-The-Lifetime-of-Food" class="headerlink" title="Design is Refactoring-The Lifetime of Food"></a><a href="http://designisrefactoring.com/2016/08/10/the-lifetime-of-food/" target="_blank" rel="noopener">Design is Refactoring-The Lifetime of Food</a></h2><p>A Rusty Analogy using Millennial Stereotypes</p>
+<p>Imagine you are out to dinner with some friends. You  are all stereotypical Millennials so photographing your meal is  expected. For every dish you order each of your friends borrows it,  takes a photograph, and then returns it to you.</p>
+<p>Well, that’s the plan anyway. Some of your friends are not the most  reliable. Will they always return the right dish to you? Will they try  to sneak a bite? Human friends are so unreliable. But if your friends  were Rust functions you’d have nothing to worry about, thanks to Rust’s  rules around borrowing and lifetimes.<br>
 	
-	</div>
-  <a type="button" href="/2016/12/23/Another Way to Generate a PrimeTable/#more" class="btn btn-default more">Read More</a>
+	</p></div>
+  <a type="button" href="/2019/03/06/The Lifetime of Food - Design is Refactoring/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -163,13 +165,7 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Algorithm/">Algorithm<span>1</span></a></li>
-		
-			<li><a href="/categories/cpp/">cpp<span>5</span></a></li>
-		
-			<li><a href="/categories/history/">history<span>1</span></a></li>
-		
-			<li><a href="/categories/opensource/">opensource<span>1</span></a></li>
+			<li><a href="/categories/Tech/">Tech<span>6</span></a></li>
 		
 			<li><a href="/categories/rumination/">rumination<span>2</span></a></li>
 		
@@ -184,33 +180,35 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/blog/">blog<span>1</span></a></li>
-		
-			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
-		
-			<li><a href="/tags/hexo/">hexo<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
-		
-			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
-		
 			<li><a href="/tags/AI/">AI<span>1</span></a></li>
 		
 			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
+			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
 			<li><a href="/tags/rust/">rust<span>1</span></a></li>
 		
-			<li><a href="/tags/cpp2-0/">cpp2.0<span>0</span></a></li>
+			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+		
+			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
 		
 			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
 		
 			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
 		
-			<li><a href="/tags/c-2-0/">c++2.0<span>1</span></a></li>
+			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
 		
-			<li><a href="/tags/grandpa/">grandpa<span>1</span></a></li>
+			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
+		
+			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
+		
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -228,11 +226,11 @@
       </li>
     
       <li>
-        <a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes."><i class="fa fa-file-o"></i>Setup VPN on AWS</a>
+        <a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes."><i class="fa fa-file-o"></i>Deploy VPN on AWS</a>
       </li>
     
       <li>
-        <a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers."><i class="fa fa-file-o"></i>unsigned integers in cpp</a>
+        <a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers."><i class="fa fa-file-o"></i>Unsigned integers in cpp</a>
       </li>
     
       <li>
@@ -240,7 +238,7 @@
       </li>
     
       <li>
-        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished)."><i class="fa fa-file-o"></i>[Translation]Design is refa...</a>
+        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished)."><i class="fa fa-file-o"></i>[Translation] Design is ref...</a>
       </li>
     
   </ul>
@@ -274,7 +272,7 @@
   </div>
   <div class="container-narrow">
   <footer> <p>
-  &copy; 2020 generalibm
+  &copy; 2021 generalibm
   
       with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
 </p> </footer>

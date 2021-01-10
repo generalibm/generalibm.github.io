@@ -3,7 +3,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>cpp | A creative expression</title>
+  <title>borrowing rule | A creative expression</title>
   <meta name="author" content="generalibm">
   
   
@@ -94,7 +94,7 @@
 
 <!-- title -->
 <div class="page-header page-header-inverse ">
-  <h1 class="archive-title-category title title-inverse ">cpp</h1>
+  <h1 class="archive-title-tag title title-inverse ">borrowing rule</h1>
 </div>
 
 <div class="row page">
@@ -113,73 +113,8 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
-			<div class="date"> 2020-01-15 </div>
-			<div class="article-title"><a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes.">Setup VPN on AWS</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="Setup-VPN-on-AWS"><a href="#Setup-VPN-on-AWS" class="headerlink" title="Setup VPN on AWS"></a>Setup VPN on AWS</h2><p><a href="https://github.com/trailofbits/algo" target="_blank" rel="noopener">Algo</a> provides an opportunity to setup personal VPN easily, which allows people to deploy personal VPN sever on AWS for 1 year freely.</p>
-	
-	</div>
-  <a type="button" href="/2020/01/15/SetupVPNonAWS/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2019-05-07 </div>
-			<div class="article-title"><a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers.">unsigned integers in cpp</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, an <strong>integer overflow</strong> occurs when an <a href="https://en.wikipedia.org/wiki/Arithmetic" target="_blank" rel="noopener">arithmetic</a>  operation attempts to create a numeric value that is outside of the  range that can be represented with a given number of digits – either  larger than the maximum or lower than the minimum representable value. </p>
-<p>The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to <em>wrap</em> around the maximum (i.e. <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" target="_blank" rel="noopener">modulo</a> a power of the <a href="https://en.wikipedia.org/wiki/Radix" target="_blank" rel="noopener">radix</a>, usually two in modern computers, but sometimes ten or another radix). </p>
-<p>An overflow condition may give results leading to unintended  behavior. In particular, if the possibility has not been anticipated,  overflow can compromise a program’s reliability and <a href="https://en.wikipedia.org/wiki/Software_security" target="_blank" rel="noopener">security</a>. </p>
-	
-	</div>
-  <a type="button" href="/2019/05/07/unsigned-intergers-in-cpp/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2019-04-10 </div>
-			<div class="article-title"><a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" title="A small piece of note for Linux toolkit.">How to specify a newer version gcc for cmake</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>After I upgraded <code>gcc</code> from <em>version of 4.4.7</em> to <em>version of 7.4.0</em> on <strong>CentOS 6.5</strong>, some ridiculous bugs happened when I linked my project to <code>gtest</code>. So I rebuilt <code>gtest</code> using the newer <code>gcc</code>, however, bugs remained. In the end, I found that <code>cmake</code> did not use the newer <code>gcc</code> when I was typing <code>cmake ..</code> command, I guessed that was the key. </p>
-	
-	</div>
-  <a type="button" href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
 			<div class="date"> 2019-03-06 </div>
-			<div class="article-title"><a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished).">[Translation]Design is refactoring-The Lifetime of Food</a></div>						
+			<div class="article-title"><a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished).">[Translation] Design is refactoring-The Lifetime of Food</a></div>						
 		</h3>
 	
 
@@ -194,27 +129,6 @@
 	
 	</p></div>
   <a type="button" href="/2019/03/06/The Lifetime of Food - Design is Refactoring/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2019-02-14 </div>
-			<div class="article-title"><a href="/2019/02/14/CppRvalueReference/" title="A brief illustration of c++ rvalue reference">C++ rvalue reference</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="c-rvalue-reference"><a href="#c-rvalue-reference" class="headerlink" title="c++ rvalue reference"></a>c++ rvalue reference</h2><h3 id="why-we-need-rvalue-references"><a href="#why-we-need-rvalue-references" class="headerlink" title="why we need rvalue references?"></a>why we need rvalue references?</h3><p>rvalue references are a new reference type introduced in c++0x that help solve the problem of <strong>unnecessary copying</strong> and enable <strong>perfect forwarding</strong>. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling <strong>move semantics</strong>.<br>
-	
-	</p></div>
-  <a type="button" href="/2019/02/14/CppRvalueReference/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -251,13 +165,7 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Algorithm/">Algorithm<span>1</span></a></li>
-		
-			<li><a href="/categories/cpp/">cpp<span>5</span></a></li>
-		
-			<li><a href="/categories/history/">history<span>1</span></a></li>
-		
-			<li><a href="/categories/opensource/">opensource<span>1</span></a></li>
+			<li><a href="/categories/Tech/">Tech<span>6</span></a></li>
 		
 			<li><a href="/categories/rumination/">rumination<span>2</span></a></li>
 		
@@ -272,33 +180,35 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
-		
-			<li><a href="/tags/c-2-0/">c++2.0<span>1</span></a></li>
-		
-			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp2-0/">cpp2.0<span>0</span></a></li>
-		
-			<li><a href="/tags/grandpa/">grandpa<span>1</span></a></li>
-		
-			<li><a href="/tags/hexo/">hexo<span>1</span></a></li>
-		
 			<li><a href="/tags/rust/">rust<span>1</span></a></li>
 		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
 		
 			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
+			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+		
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+		
 			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
 		
-			<li><a href="/tags/Linux/">Linux<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
 		
 			<li><a href="/tags/AI/">AI<span>1</span></a></li>
 		
-			<li><a href="/tags/blog/">blog<span>1</span></a></li>
+			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+		
+			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -316,11 +226,11 @@
       </li>
     
       <li>
-        <a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes."><i class="fa fa-file-o"></i>Setup VPN on AWS</a>
+        <a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes."><i class="fa fa-file-o"></i>Deploy VPN on AWS</a>
       </li>
     
       <li>
-        <a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers."><i class="fa fa-file-o"></i>unsigned integers in cpp</a>
+        <a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers."><i class="fa fa-file-o"></i>Unsigned integers in cpp</a>
       </li>
     
       <li>
@@ -328,7 +238,7 @@
       </li>
     
       <li>
-        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished)."><i class="fa fa-file-o"></i>[Translation]Design is refa...</a>
+        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished)."><i class="fa fa-file-o"></i>[Translation] Design is ref...</a>
       </li>
     
   </ul>
@@ -362,7 +272,7 @@
   </div>
   <div class="container-narrow">
   <footer> <p>
-  &copy; 2020 generalibm
+  &copy; 2021 generalibm
   
       with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
 </p> </footer>
