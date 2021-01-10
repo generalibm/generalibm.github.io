@@ -1,3 +1,4 @@
 /public
 /.deploy_git
-/_config.yml*
+db.json
+.DS_Store
