@@ -77,4 +77,5 @@ deploy:
 
 search:
   path: search.xml
-  field: all
+  field: post
+  content: true
