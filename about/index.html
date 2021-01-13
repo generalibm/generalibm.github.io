@@ -6,11 +6,10 @@
   <title>about me | A creative expression</title>
   <meta name="author" content="generalibm">
   
-  <meta name="description" content="Hong ZHANG (generalibm@gmail.com)
-ObjectiveC++ developer 
+  <meta name="description" content="Hong ZHANG (generalibm@gmail.com), passionate about Operating System and RISC-V instruction-set.
+ObjectiveC++ developer.
 Personal skills
-Familiar with the basic data structures and algorithms, familiar with STL.
-F">
+Familiar with">
   
   <meta name="keywords" content="CV,skills">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,8 +22,6 @@ F">
   
 
   
-  
-    <link href="/favicon.png" rel="icon">
   
 
   <!-- CSS -->
@@ -43,6 +40,12 @@ F">
   <![endif]-->
 
   <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
   
   <!-- analytics -->
   
@@ -118,8 +121,8 @@ F">
 	<div class="mypage">		
 	  		
 
-	  <p>Hong ZHANG (<a href="mailto:generalibm@gmail.com" target="_blank" rel="noopener">generalibm@gmail.com</a>)</p>
-<h3 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h3><p><code>C++</code> developer </p>
+	  <p>Hong ZHANG (<a href="mailto:generalibm@gmail.com" target="_blank" rel="noopener">generalibm@gmail.com</a>), passionate about <strong>Operating System</strong> and <code>RISC-V</code> instruction-set.</p>
+<h3 id="Objective"><a href="#Objective" class="headerlink" title="Objective"></a>Objective</h3><p><code>C++</code> developer.</p>
 <h3 id="Personal-skills"><a href="#Personal-skills" class="headerlink" title="Personal skills"></a>Personal skills</h3><ul>
 <li>Familiar with the basic <strong>data structures and algorithms</strong>, familiar with <strong>STL</strong>.</li>
 <li>Familiar with <code>C/C++/Qt</code> development in <em>Linux/windows</em>, familiar with <strong>vim/gcc/gdb/vs/eclipse</strong>.</li>
@@ -127,9 +130,8 @@ F">
 <li>Familiar with <strong>UML</strong>, be able to write <em>design</em>,<em>implementation</em> and <em>test</em> <strong>docs</strong>.</li>
 <li>Familiar with <strong>multiple-thread</strong> and <strong>network programming</strong>.</li>
 <li>Familiar with <code>shell</code>, know <code>Rust/Python</code>.</li>
-<li>Passionate about <strong>Operating System</strong> and <code>RISC-V</code> instruction set.</li>
 </ul>
-<h3 id="Self-assessment"><a href="#Self-assessment" class="headerlink" title="Self-assessment"></a>Self-assessment</h3><p>Love life, love techs; prefer critical thinking and be willing to share.</p>
+<h3 id="Self-assessment"><a href="#Self-assessment" class="headerlink" title="Self-assessment"></a>Self-assessment</h3><p>Love life, love techs; prefer independent thinking and be willing to share.</p>
 	  
 	</div>
 
@@ -171,15 +173,6 @@ F">
 </p> </footer>
 </div> <!-- container-narrow -->
   
-  <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
-  </script>
-
 
 
   
@@ -194,14 +187,6 @@ F">
 <script src="/js/search.js"></script> 
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
-
 
 
    <script type="text/javascript">      
@@ -215,6 +200,22 @@ F">
 
 
 <!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
 
 
 </body>

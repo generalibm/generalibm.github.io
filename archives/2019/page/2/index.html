@@ -18,8 +18,6 @@
 
   
   
-    <link href="/favicon.png" rel="icon">
-  
 
   <!-- CSS -->
   <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
@@ -37,6 +35,12 @@
   <![endif]-->
 
   <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
   
   <!-- analytics -->
   
@@ -163,7 +167,7 @@
 		<li class="listing-item">
 		<span class="date_class"> 2019-03-06 </span> &raquo;
 		
-		   <span class="title"><a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished).">[Translation] Design is refactoring-The Lifetime of Food</a></span>
+		   <span class="title"><a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="A Rusty Analogy using Millennial Stereotypes.">[Translation] Design is refactoring</a></span>
 		
 		</li>			
 		
@@ -257,11 +261,12 @@
 	<div id="sidebar">
 	
 			
-  <div class="form-group has-success has-feedback" id="site_search">
-    <form class="site-search-form">
-        <input type="text" id="st-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control">
-    </form>
-  </div>  
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control">
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
 
 
 		
@@ -285,35 +290,35 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
-		
-			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
-		
-			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
+			<li><a href="/tags/rust/">rust<span>1</span></a></li>
 		
 			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
 		
-			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
+			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
 		
 			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
 		
 			<li><a href="/tags/AI/">AI<span>1</span></a></li>
 		
-			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
 		
-			<li><a href="/tags/linux/">linux<span>1</span></a></li>
-		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
-		
-			<li><a href="/tags/rust/">rust<span>1</span></a></li>
+			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
 		
 			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
 		
-			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
+			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
 		
 			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+		
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+		
+			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -343,7 +348,7 @@
       </li>
     
       <li>
-        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="It is my first translation about rust programming(unfinished)."><i class="fa fa-file-o"></i>[Translation] Design is ref...</a>
+        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="A Rusty Analogy using Millennial Stereotypes."><i class="fa fa-file-o"></i>[Translation] Design is ref...</a>
       </li>
     
   </ul>
@@ -364,6 +369,20 @@
 		
 			<div class="widget">
     
+	    <h4 class="dsq-widget-title">Recent Comments</h4>
+		<div id="recent-comments"></div>
+		<script type="text/javascript">
+		    getRecentCommentsList({
+			   type: "github" ? "github" : "github",
+			   user: "generalibm",
+               repo: "generalibm.github.io",
+               client_id: "",
+               client_secret: "",
+			   count: "5" ? "5" : 5,
+			   recent_comments_target: "#recent-comments"
+			});
+		</script>
+	
 </div>
 
 		
@@ -383,15 +402,6 @@
 </p> </footer>
 </div> <!-- container-narrow -->
   
-  <script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install', 'ZP2ZSuHgipSZfRyU8uTR','2.0.0');
-  </script>
-
 
 
   
@@ -406,14 +416,6 @@
 <script src="/js/search.js"></script> 
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
-
 
 
    <script type="text/javascript">      
@@ -427,6 +429,22 @@
 
 
 <!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
 
 
 </body>
