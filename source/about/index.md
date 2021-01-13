@@ -4,10 +4,10 @@ date: 2019-01-19 01:33:34
 keywords: [CV, skills]
 ---
 
-Hong ZHANG (generalibm@gmail.com)
+Hong ZHANG (generalibm@gmail.com), passionate about **Operating System** and `RISC-V` instruction-set.
 
 ### Objective ###
-`C++` developer 
+`C++` developer.
 
 ### Personal skills ###
 * Familiar with the basic **data structures and algorithms**, familiar with **STL**.
@@ -16,8 +16,8 @@ Hong ZHANG (generalibm@gmail.com)
 * Familiar with **UML**, be able to write *design*,*implementation* and *test* **docs**.
 * Familiar with **multiple-thread** and **network programming**.
 * Familiar with `shell`, know `Rust/Python`.
-* Pationate about **Operating System** and `RISC-V` instruction set.
+
 
 ### Self-assessment ###
-Love life, love techs; prefer critical thinking and be willing to share.
+Love life, love techs; prefer independent thinking and be willing to share.
 
