@@ -117,6 +117,48 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2019-02-14 </div>
+			<div class="article-title"><a href="/2019/02/14/CppRvalueReference/" title="A brief illustration of c++ rvalue reference">C++ rvalue reference</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="c-rvalue-reference"><a href="#c-rvalue-reference" class="headerlink" title="c++ rvalue reference"></a>c++ rvalue reference</h2><h3 id="why-we-need-rvalue-references"><a href="#why-we-need-rvalue-references" class="headerlink" title="why we need rvalue references?"></a>why we need rvalue references?</h3><p>rvalue references are a new reference type introduced in c++0x that help solve the problem of <strong>unnecessary copying</strong> and enable <strong>perfect forwarding</strong>. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling <strong>move semantics</strong>.<br>
+	
+	</p></div>
+  <a type="button" href="/2019/02/14/CppRvalueReference/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2016-12-23 </div>
+			<div class="article-title"><a href="/2016/12/23/Another Way to Generate a PrimeTable/">Another Way To Generate A Prime Table</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalculatePrimesUpTo</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">   ::<span class="built_in">std</span>::fill(is_prime_, is_prime_ + is_prime_size_, <span class="literal">true</span>);</span><br><span class="line">   is_prime_[<span class="number">0</span>] = is_prime_[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= max; i++) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!is_prime_[i]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Marks all multiples of i (except i itself) as non-prime.</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>*i; j &lt;= max; j += i) &#123;</span><br><span class="line">       is_prime_[j] = <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+	
+	</div>
+  <a type="button" href="/2016/12/23/Another Way to Generate a PrimeTable/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2016-03-16 </div>
 			<div class="article-title"><a href="/2016/03/16/IllustrateOfProtoBuf/">Protobuf 101</a></div>						
 		</h3>
@@ -178,7 +220,7 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Tech/">Tech<span>6</span></a></li>
+			<li><a href="/categories/Tech/">Tech<span>8</span></a></li>
 		
 			<li><a href="/categories/rumination/">rumination<span>2</span></a></li>
 		
@@ -193,35 +235,43 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
-		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
-		
-			<li><a href="/tags/rust/">rust<span>1</span></a></li>
-		
-			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
-		
-			<li><a href="/tags/linux/">linux<span>1</span></a></li>
-		
-			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
-		
-			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
-		
-			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
-		
-			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
+			<li><a href="/tags/shutdown/">shutdown<span>1</span></a></li>
 		
 			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
 		
-			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
-		
 			<li><a href="/tags/TCG/">TCG<span>1</span></a></li>
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/rCore/">rCore<span>1</span></a></li>
+		
+			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
+		
+			<li><a href="/tags/AI/">AI<span>1</span></a></li>
+		
+			<li><a href="/tags/rust/">rust<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/protobuf/">protobuf<span>1</span></a></li>
 		
 			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
 		
-			<li><a href="/tags/AI/">AI<span>1</span></a></li>
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+		
+			<li><a href="/tags/SBI/">SBI<span>1</span></a></li>
+		
+			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
+		
+			<li><a href="/tags/gdb/">gdb<span>1</span></a></li>
+		
+			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+		
+			<li><a href="/tags/ecall/">ecall<span>1</span></a></li>
+		
+			<li><a href="/tags/gcc/">gcc<span>1</span></a></li>
+		
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -235,6 +285,14 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2021/01/15/openSBI-bug-in-rCore-lab/" title="openSBI v0.7 have not implemented RISC-V SBI yet?"><i class="fa fa-file-o"></i>An openSBI shutdown bug in ...</a>
+      </li>
+    
+      <li>
+        <a href="/2021/01/14/rCore-lab1/" title="Write an OS from zero to one based on RISC-V ISA in Rust."><i class="fa fa-file-o"></i>rCore lab1 spec</a>
+      </li>
+    
+      <li>
         <a href="/2020/08/27/AI-and-its-limits/"><i class="fa fa-file-o"></i>[Translation] An understand...</a>
       </li>
     
@@ -244,14 +302,6 @@
     
       <li>
         <a href="/2019/05/07/unsigned-intergers-in-cpp/" title="A brief illustration of c++ unsigned integers."><i class="fa fa-file-o"></i>Unsigned integers in cpp</a>
-      </li>
-    
-      <li>
-        <a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" title="A small piece of note for Linux toolkit."><i class="fa fa-file-o"></i>How to specify a newer vers...</a>
-      </li>
-    
-      <li>
-        <a href="/2019/03/06/The Lifetime of Food - Design is Refactoring/" title="A Rusty Analogy using Millennial Stereotypes."><i class="fa fa-file-o"></i>[Translation] Design is ref...</a>
       </li>
     
   </ul>
@@ -279,8 +329,8 @@
 			   type: "github" ? "github" : "github",
 			   user: "generalibm",
                repo: "generalibm.github.io",
-               client_id: "",
-               client_secret: "",
+               client_id: "bf7d4ba11877db88543e",
+               client_secret: "bff8a6b06b745c0bfcdccbe225623ea8e2a057bb",
 			   count: "5" ? "5" : 5,
 			   recent_comments_target: "#recent-comments"
 			});

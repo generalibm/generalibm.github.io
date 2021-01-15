@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>rCore lab1 spec | A creative expression</title>
+  <meta name="author" content="generalibm">
+  
+  <meta name="description" content="Write an OS from zero to one based on RISC-V ISA in Rust.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="rCore lab1 spec">
+  <meta property="og:site_name" content="A creative expression">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">A creative expression</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> rCore lab1 spec</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>Write an OS from zero to one based on RISC-V ISA in Rust.</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p><a href="https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-1/practice.html" target="_blank" rel="noopener">rCore lab1</a></p>
+<p>Exceptions</p>
+<blockquote>
+<p>  Also called interrupt. An unscheduled event that disrupts program execution; used to detect overflow.</p>
+</blockquote>
+<p>Interrupts</p>
+<blockquote>
+<p>  An exception that comes from outside of the processor. (Some architectures use the term<code>interrupt</code> for all exceptions.)</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="实验题"><a href="#实验题" class="headerlink" title="实验题"></a>实验题</h2><h3 id="1-原理："><a href="#1-原理：" class="headerlink" title="1.  原理："></a>1.  原理：</h3><p>在 <code>rust_main</code> 函数中，执行 <code>ebreak</code> 命令后至函数结束前，<code>sp</code> 寄存器的值是怎样变化的？</p>
+<ul>
+<li><p>计算机 (qemu) 加电之后，会进行自检 （POST，Power-On self-Test），然后跳转到 bootloader (openSBI) 入口，在 bootloader 中，会进行内核环境（内存，外设等）探测。随后，bootloader 将内核 (rCore-Tutorial/os/target/riscv64imac-unknown-none-elf/debug/os) 加载到内存中 0x80200000 地址，同时从 M 态切换到 S 态，此后跳转到 os 中运行，即 <code>os/src/main.rs</code> 。 </p>
+</li>
+<li><p>在分支 lab-1 的代码中 <code>os/src/main.rs:31</code> 将 os 跳转到 <code>os/src/entry.asm</code> 中。该汇编程序完成的功能如注释所述：编译链接 os 时，将入口地址设为 <code>_start</code> ，此文件的功能即实现 <code>_start</code>。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">    .section .text.entry</span><br><span class="line">    .globl _start</span><br><span class="line">    # 目前 _start 的功能：将预留的栈空间写入 $sp，然后跳转至 rust_main</span><br><span class="line">_start:</span><br><span class="line">    la sp, boot_stack_top</span><br><span class="line">    jal rust_main</span><br><span class="line"></span><br><span class="line">    # 回忆：bss 段是 ELF 文件中只记录长度，而全部初始化为 0 的一段内存空间</span><br><span class="line">    # 这里声明字段 .bss.stack 作为操作系统启动时的栈</span><br><span class="line">    .section .bss.stack</span><br><span class="line">    .global boot_stack</span><br><span class="line">boot_stack:</span><br><span class="line">    # 16K 启动栈大小</span><br><span class="line">    .space 4096 * 16</span><br><span class="line">    .global boot_stack_top</span><br><span class="line">boot_stack_top:</span><br><span class="line">    # 栈结尾</span><br></pre></td></tr></table></figure>
+<p>  在 <code>_start</code> 中开辟了 16K 内存作为启动栈，然后将 0x80200000 + 16K 的位置作为 <code>boot_stack_top</code> 赋值给 sp 寄存器。此后跳转到 <code>rust_main</code> 中。</p>
+  <figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="keyword">extern</span> <span class="string">"C"</span> <span class="function"><span class="keyword">fn</span> <span class="title">rust_main</span></span>() &#123;</span><br><span class="line">    interrupt::init();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">"Hello, rCore-Tutorial!"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsafe</span> &#123; llvm_asm!(<span class="string">"ebreak"</span>) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">panic!</span>(<span class="string">"end of rust_main"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在<code>rust_main</code>中，首先进行中断操作的初始化工作 <code>interrupt::init()</code> ，然后打印一行提示 <code>println!(&quot;Hello, rCore-Tutorial!&quot;)</code> 。此后触发一个断点异常（breakpoint exception）<code>unsafe { llvm_asm!(&quot;ebreak&quot;) }</code> 。</p>
+</li>
+<li><p>代码 <code>unsafe { llvm_asm!(&quot;ebreak&quot;) }</code> 会转入到 <code>os/src/interrupt/interrupt.asm</code> 。该文件完成的工作是 ：</p>
+<p>  1）保存 32 个通用寄存器的值到内存中；</p>
+<p>  2）还保存 2 个 CSR （sstatus 和 sepc）的值到内存中；</p>
+<p>  3）保存 sp 值，scause 值，stval 值到 <code>a0</code>, <code>a1</code>, <code>a2</code> 寄存寄中作为 <code>handle_interrupt</code> 函数参数；</p>
+<p>  4）跳转到 <code>os/src/interrupt/handler.rs::handle_interrupt</code> 进行中断处理；</p>
+<p>  5）中断处理完成后，依次恢复 2）和 1）中保存在内存的值到相应寄存器中去。</p>
+<p>   这样就完成了从中断现场（Context，大小为<code>34 * 8</code>）保护到中断处理，再到中断现场恢复操作。而这过程是由于 <code>cargo build</code> 过程生成了 <code>*.rs</code> 文件和 <code>*.asm</code> 文件中函数的符号表（symbol table），因此整个中断处理过程的函数调用过程可以理解为：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inerrupt.asm::__interrupt -&gt; handler.rs::handle_interrupt -&gt; inerrupt.asm::__restore</span><br></pre></td></tr></table></figure>
+<p>   在上述过程中 <code>sp</code> 值的变化为： <code>inerrupt.asm::__interrupt</code> 过程 <code>sp</code> 值会 <code>- 34 * 8</code> ；<code>handler.rs::handle_interrupt</code> 过程可能也会有或多或少的函数调用参数入栈和出栈操作，因此 <code>sp</code> 值前后不变；<code>inerrupt.asm::__restore</code> 过程 <code>sp</code> 值会 <code>+ 34 * 8</code> 。</p>
+</li>
+</ul>
+<h3 id="2-分析："><a href="#2-分析：" class="headerlink" title="2.  分析："></a>2.  分析：</h3><p>如果去掉 <code>rust_main</code> 后的 <code>panic</code> 会发生什么，为什么？</p>
+<ul>
+<li><p>rCore <code>os/src/main.rs::rust_main</code> 中的 <code>panic</code> 是在 <code>os/src/panic.rs</code> 中通过声明 panic 回调函数<code>panic_handler</code>实现的。在 <code>os/src/panic.rs</code> 中引用了 <code>core::panic::PanicInfo</code> 结构，因此可以在 <code>panic_handler</code> 中获知调用 <code>panic</code> 处的信息，如函数名，行号等。在 <code>panic_handler</code> 的最后调用了 <code>shudown</code> 函数，该函数在 <code>os/src/sbi.rs::shutdown-&gt;sbi_call-&gt;ecall</code> 中实现，是调用 M 模式的 <code>ecall</code>。但是，在我的机器中，<code>sib_shutdown</code> 似乎有点<a href="https://github.com/rcore-os/rCore-Tutorial/issues/127" target="_blank" rel="noopener">问题</a>。</p>
+</li>
+<li><p>如果正常 <code>shutdown</code>，那么 <code>qemu</code> 会关机。</p>
+</li>
+<li><p>反过来，如果去掉 <code>panic</code> 即不能正常 <code>shutdown</code>；那么  <code>rust_main</code> 执行完后，就会回到 <code>entry.asm:14</code>中 <code>jal rust_main</code> 后面执行，而之后的代码已经不可控。</p>
+</li>
+<li><p>试着去掉 <code>panic</code> 后之后再 <code>make run</code> 发现，<code>os</code> 会继续运行，而且打印很多不可识别字符，在经过一段时间崩溃。</p>
+</li>
+<li><p>加入实验 3.1 的捕获操作后，在次 <code>make run</code> 会发现 <code>os/src/interrupt/handler.rs::handle_interrupt</code>可以捕获到 <strong>访问不存在的地址</strong> 错误。</p>
+</li>
+</ul>
+<h3 id="3-实验"><a href="#3-实验" class="headerlink" title="3.  实验"></a>3.  实验</h3><h4 id="1-如果程序访问不存在的地址，会得到-Exception-LoadFault。模仿捕获-ebreak-和时钟中断的方法，捕获-LoadFault（之后-panic-即可）。"><a href="#1-如果程序访问不存在的地址，会得到-Exception-LoadFault。模仿捕获-ebreak-和时钟中断的方法，捕获-LoadFault（之后-panic-即可）。" class="headerlink" title="1. 如果程序访问不存在的地址，会得到 Exception::LoadFault。模仿捕获 ebreak 和时钟中断的方法，捕获 LoadFault（之后 panic 即可）。"></a>1. 如果程序访问不存在的地址，会得到 <code>Exception::LoadFault</code>。模仿捕获 <code>ebreak</code> 和时钟中断的方法，捕获 <code>LoadFault</code>（之后 <code>panic</code> 即可）。</h4><p>重写 <code>os/src/interrupt/handler::handler_interrupt</code> 函数如下：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">pub</span> <span class="function"><span class="keyword">fn</span> <span class="title">handle_interrupt</span></span>(context: &amp;<span class="keyword">mut</span> Context, scause: Scause, stval: <span class="built_in">usize</span>) &#123;</span><br><span class="line">        <span class="comment">// 返回的 Context 必须位于放在内核栈顶</span></span><br><span class="line">    <span class="keyword">match</span> scause.cause() &#123;</span><br><span class="line">            <span class="comment">// 断点中断（ebreak）</span></span><br><span class="line">        Trap::Exception(Exception::Breakpoint) =&gt; breakpoint(context),</span><br><span class="line">            <span class="comment">// 访问不存在地址</span></span><br><span class="line">        Trap::Exception(Exception::LoadFault) =&gt; <span class="built_in">panic!</span>(<span class="string">"访问不存在地址"</span>),</span><br><span class="line">            <span class="comment">// 时钟中断</span></span><br><span class="line">        Trap::Interrupt(Interrupt::SupervisorTimer) =&gt; supervisor_timer(context),</span><br><span class="line">            <span class="comment">// 其他情况，终止当前线程</span></span><br><span class="line">        _ =&gt; fault(context, scause, stval),</span><br><span class="line">        &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-在处理异常的过程中，如果程序想要非法访问的地址是-0x0，则打印-SUCCESS-。"><a href="#2-在处理异常的过程中，如果程序想要非法访问的地址是-0x0，则打印-SUCCESS-。" class="headerlink" title="2. 在处理异常的过程中，如果程序想要非法访问的地址是 0x0，则打印 SUCCESS!。"></a>2. 在处理异常的过程中，如果程序想要非法访问的地址是 <code>0x0</code>，则打印 <code>SUCCESS!</code>。</h4><p><strong>参考答案：</strong></p>
+<ul>
+<li>如果程序因无效访问内存造成异常，这个访问的地址会被存放在 <code>stval</code> 中，而它已经被我们作为参数传入 <code>handle_interrupt</code> 了，因此直接判断即可</li>
+</ul>
+<h4 id="3-添加或修改少量代码，使得运行时触发这个异常，并且打印出-SUCCESS-。"><a href="#3-添加或修改少量代码，使得运行时触发这个异常，并且打印出-SUCCESS-。" class="headerlink" title="3. 添加或修改少量代码，使得运行时触发这个异常，并且打印出 SUCCESS!。"></a>3. 添加或修改少量代码，使得运行时触发这个异常，并且打印出 <code>SUCCESS!</code>。</h4><p><em>要求：不允许添加或修改任何 unsafe 代码</em></p>
+<p><strong>参考答案：</strong></p>
+<ul>
+<li><p>解法 1：在 <code>interrupt/handler.rs</code> 的 <code>breakpoint</code> 函数中，将 <code>context.sepc += 2</code> 修改为 <code>context.sepc = 0</code>（则 <code>sret</code> 时程序会跳转到 <code>0x0</code>）</p>
+</li>
+<li><p>解法 2：去除 <code>rust_main</code> 中的 <code>panic</code> 语句，并在 <code>entry.asm</code> 的 <code>jal rust_main</code> 之后，添加一行读取 <code>0x0</code> 地址的指令（例如 <code>jr x0</code> 或 <code>ld x1, (x0)</code>）</p>
+</li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2021/01/15/openSBI-bug-in-rCore-lab/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2020/08/27/AI-and-its-limits/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "generalibm",
+	       repo: "generalibm.github.io",
+		   client_id: "bf7d4ba11877db88543e",
+           client_secret: "bff8a6b06b745c0bfcdccbe225623ea8e2a057bb",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "rCore lab1 spec",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2021-01-14 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Tech/">Tech<span>8</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#实验题"><span class="toc-article-text">实验题</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-原理："><span class="toc-article-text">1.  原理：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-分析："><span class="toc-article-text">2.  分析：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-实验"><span class="toc-article-text">3.  实验</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-如果程序访问不存在的地址，会得到-Exception-LoadFault。模仿捕获-ebreak-和时钟中断的方法，捕获-LoadFault（之后-panic-即可）。"><span class="toc-article-text">1. 如果程序访问不存在的地址，会得到 Exception::LoadFault。模仿捕获 ebreak 和时钟中断的方法，捕获 LoadFault（之后 panic 即可）。</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-在处理异常的过程中，如果程序想要非法访问的地址是-0x0，则打印-SUCCESS-。"><span class="toc-article-text">2. 在处理异常的过程中，如果程序想要非法访问的地址是 0x0，则打印 SUCCESS!。</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#3-添加或修改少量代码，使得运行时触发这个异常，并且打印出-SUCCESS-。"><span class="toc-article-text">3. 添加或修改少量代码，使得运行时触发这个异常，并且打印出 SUCCESS!。</span></a></li></ol></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2021 generalibm
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>
