@@ -47,10 +47,10 @@ recommended_posts:
 
 # Analytics
 google_analytics:
-  enable: false
+  enable: true
   siteid:
 baidu_tongji:
-  enable: false
+  enable: true
   siteid:
 
 # search
@@ -58,13 +58,13 @@ swiftype_key:
 
 # share widgets
 bdshare: true
-jiathis: false
+jiathis: true
 
 # built-in comment system
 comment_js:
   type: "github"
   user: "generalibm"
   repo: "generalibm.github.io"
-  client_id: 
-  client_secret: 
+  client_id: 318b6e7e5d608e7f1a69
+  client_secret: b5f4c1d160adebb7a16db3502647f081b7cfa577
   count: 5
