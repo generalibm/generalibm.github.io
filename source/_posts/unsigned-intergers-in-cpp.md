@@ -1,16 +1,17 @@
 ---
 title: Unsigned integers in cpp
-date: 2019-05-07 10:23:38
-tags: cpp
+description: Avoid unsigned numbers whenever possible.
+keyword: [unsigned integers overflow, wraps around]
+tags: [cpp, overflow]
 categories: Tech
-keyword: [unsigned integers, wraps around, modulo wrapping, overflow]
-description: A brief illustration of c++ unsigned integers.
 toc: true
+date: 2019-05-07 10:23:38
+updated: 2020-01-17 20:57:40
 ---
 
 In [computer programming](https://en.wikipedia.org/wiki/Computer_programming), an **integer overflow** occurs when an [arithmetic](https://en.wikipedia.org/wiki/Arithmetic)  operation attempts to create a numeric value that is outside of the  range that can be represented with a given number of digits – either  larger than the maximum or lower than the minimum representable value. 
 
-The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to *wrap* around the maximum (i.e. [modulo](https://en.wikipedia.org/wiki/Modular_arithmetic) a power of the [radix](https://en.wikipedia.org/wiki/Radix), usually two in modern computers, but sometimes ten or another radix). 
+The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to *wrap around* the maximum (i.e. [modulo](https://en.wikipedia.org/wiki/Modular_arithmetic) a power of the [radix](https://en.wikipedia.org/wiki/Radix), usually two in modern computers, but sometimes ten or another radix). 
 
 An overflow condition may give results leading to unintended  behavior. In particular, if the possibility has not been anticipated,  overflow can compromise a program's reliability and [security](https://en.wikipedia.org/wiki/Software_security). 
 
@@ -191,12 +192,11 @@ int bar()
 }
 ```
 
-
 The author of fun() was expecting someone to call this  function with only positive numbers.  But the caller is passing in *-1*.  What happens in this case?
 
 The signed argument of *-1* gets implicitly converted to an  unsigned parameter.  *-1* isn’t in the range of an unsigned number, so it  wraps around to some large number (probably `4294967295`).  Then the program goes ballistic.  Worse, there’s no good way to guard against  this condition from happening.  C++ will freely convert between signed  and unsigned numbers, but it won’t do any range checking to make sure  you don’t overflow your type.
 
-Many modern programming languages (such as Java and C#) either don’t include unsigned types, or limit their use. Python would raise a exception.
+Many modern programming languages (such as Java and C#) either don’t include unsigned types, or limit their use. Python would raise a exception. Rust has some interresting rules involving this behavior. When you're compliling in debug mode, Rust includes checks for integer overflow that cause your program to *panic* at runtime. When you're compliling in release mode, Rust does not include checks for integer overflow. Instead, if overflow occurs, Rust also performs *two's complement wrapping* like c++ does.
 
 **Bjarne Stroustrup**,  the designer of C++, said, “Using an `unsigned` instead of an `int` to gain one more bit to represent positive integers is almost never a good idea”.
 
