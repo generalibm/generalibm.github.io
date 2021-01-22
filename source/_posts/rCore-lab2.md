@@ -1,19 +1,191 @@
----
-title: rCore lab2
-description: Memory management.
-keyword: [Allocator, Frame, PPN, FrameTracker, Buddy System, Slab, Heap allocator, Segement tree, rCore]
-tags: [rCore,] 
-categories: Tech
-toc: true
-date: 2021-01-17 10:40:09
-updated: 2021-01-21
----
+## Introduction
 
-## Indroduction
-
-**Memory Management** is an important component in **Operating System**, and plays key role both in Process/Thread implementation and I/O subsystem. It is a classic problem for OS designing and many book s introducing Memory Management at length. However, implementing a memory management system are not easy, especially from zero to one. But it is aslo perhaps the most helpful approach to unstanding the key principles of memory management. [rCore lab 2](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-2/practice.html) is focusing on the implementation of physical memory management through some classic methods like abstracting memory with **frame**.
+**Memory Management** is an important component in **Operating System**, and plays key role both in Process/Thread implementation and I/O subsystem. It is a classic problem for OS designing and many book s introducing Memory Management at length. However, implementing a memory management system are not easy, especially from zero to one. But it is also perhaps the most helpful approach to understanding the key principles of memory management. [rCore lab 2](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-2/practice.html) is focusing on the implementation of physical memory management through some classic methods like abstracting memory with **frame**.
 
 <!--more-->
+
+## 实验指导
+
+### 动态物理内存分配
+
+rCore 通过使用 `#[global_allocator]` 标记实现自己的全局内存分配器，从而自己管理内存分配。在 `os/src/memory/heap.rs` 中使用已经实现的伙伴系统分配器 `buddy_system_allocator::LockHeap` crate 来完成自己的堆分配。
+
+```rust
+use buddy_system_allocator::LockedHeap;
+
+/// 进行动态内存分配所用的堆空间
+///
+/// 大小为 [`KERNEL_HEAP_SIZE`]，即 0x80_0000
+/// 这段空间编译后会被放在操作系统执行程序的 bss 段，因为已经初始化 0
+static mut HEAP_SPACE: [u8; KERNEL_HEAP_SIZE] = [0; KERNEL_HEAP_SIZE];
+
+#[global_allocator]
+static HEAP: LockedHeap = LockedHeap::empty();
+
+/// 初始化操作系统运行时堆空间
+pub fn init() {
+    // 告诉分配器使用这一段预留的空间作为堆
+    // 因为 Heap 是 static mut 型，所以要用 unsafe
+    unsafe {
+        HEAP.lock()
+            .init(HEAP_SPACE.as_ptr() as usize, KERNEL_HEAP_SIZE);
+    }
+    
+}
+
+/// 空间分配错误的回调，直接 panic 退出
+#[alloc_error_handler]
+fn alloc_error_handler(_: alloc::alloc::Layout) -> ! {
+    panic!("alloc error")
+}
+```
+
+在 rCore 的对分配的代码中，按照字节分配，总共在 .bss 上分配了 8MB 。因而可以使用 alloc care 中的 vec 来进行动态内存分配。比如：
+
+```rust
+pub extern "C" fn rust_main() {
+    interrupt::init();
+    memory::init();
+    
+    let mut vec = Vec::new();
+    for i in 0..(0x80_0000/16) {
+        vec.push(i);
+    }
+    assert_eq!(vec.len(), (0x80_0000/16));
+    for (i, value) in vec.into_iter().enumerate() {
+        assert_eq!(value, i);
+    }
+    println!("end of main");
+    panic!();
+}
+```
+
+
+
+### 物理内存探测
+
+物理地址不仅仅能访问 DRAM，也可以访问外设。RISCV 通过 MMIO (Memory Mapped I/O) 技术将外设映射到一段物理地址，于是外设和 DRAM 的地址访问得到了统一。
+
+在 qemu 模拟的 RISCV Virt 计算机中物理内存（DRAM）的地址范围为 [0x80000000, 0x88000000)，即 128M ，是 qemu 的默认值。可以通过 `-m` 来指定其 DRAM 的大小。
+
+在 rCore 中对物理地址进行了抽象封装，即 `os/src/memory/address.rs` 中的 `pub struct PhysicalAddress(pub usize)` 。实现了类似 `usize` 的诸如加、减等运算操作。为了完成与 `usize` 类型基于 layout 的转换（reinterpreting）需要加上 `[#repr(C)]` 。
+
+```rust
+#[repr(C)]
+#[derive(Copy, Clone, Debug, Default, Eq, PartialEq, Ord, PartialOrd, Hash)]
+pub struct PhysicalAddress(pub usize);
+
+impl PhysicalAddress {
+    /// 取得页内偏移
+    pub fn page_offset(&self) -> usize {
+        self.0 % PAGE_SIZE
+    }
+}
+
+macro_rules! implement_address_to_page_number {
+    // 这里面的类型转换实现 [`From`] trait，会自动实现相反的 [`Into`] trait
+    ($address_type: ty, $page_number_type: ty) => {
+        impl From<$page_number_type> for $address_type {
+            /// 从页号转换为地址
+            fn from(page_number: $page_number_type) -> Self {
+                Self(page_number.0 * PAGE_SIZE)
+            }
+        }
+        impl From<$address_type> for $page_number_type {
+            /// 从地址转换为页号，直接进行移位操作
+            ///
+            /// 不允许转换没有对齐的地址，这种情况应当使用 `floor()` 和 `ceil()`
+            fn from(address: $address_type) -> Self {
+                assert!(address.0 % PAGE_SIZE == 0);
+                Self(address.0 / PAGE_SIZE)
+            }
+        }
+        impl $page_number_type {
+            /// 将地址转换为页号，向下取整
+            pub const fn floor(address: $address_type) -> Self {
+                Self(address.0 / PAGE_SIZE)
+            }
+            /// 将地址转换为页号，向上取整
+            pub const fn ceil(address: $address_type) -> Self {
+                Self(address.0 / PAGE_SIZE + (address.0 % PAGE_SIZE != 0) as usize)
+            }
+        }
+    };
+}
+implement_address_to_page_number! {PhysicalAddress, PhysicalPageNumber}
+
+/// 为各种仅包含一个 usize 的类型实现运算操作
+macro_rules! implement_usize_operations {
+    ($type_name: ty) => {
+        /// `+`
+        impl core::ops::Add<usize> for $type_name {
+            type Output = Self;
+            fn add(self, other: usize) -> Self::Output {
+                Self(self.0 + other)
+            }
+        }
+        /// `+=`
+        impl core::ops::AddAssign<usize> for $type_name {
+            fn add_assign(&mut self, rhs: usize) {
+                self.0 += rhs;
+            }
+        }
+        /// `-`
+        impl core::ops::Sub<usize> for $type_name {
+            type Output = Self;
+            fn sub(self, other: usize) -> Self::Output {
+                Self(self.0 - other)
+            }
+        }
+        /// `-`
+        impl core::ops::Sub<$type_name> for $type_name {
+            type Output = usize;
+            fn sub(self, other: $type_name) -> Self::Output {
+                self.0 - other.0
+            }
+        }
+        /// `-=`
+        impl core::ops::SubAssign<usize> for $type_name {
+            fn sub_assign(&mut self, rhs: usize) {
+                self.0 -= rhs;
+            }
+        }
+        /// 和 usize 相互转换
+        impl From<usize> for $type_name {
+            fn from(value: usize) -> Self {
+                Self(value)
+            }
+        }
+        /// 和 usize 相互转换
+        impl From<$type_name> for usize {
+            fn from(value: $type_name) -> Self {
+                value.0
+            }
+        }
+        impl $type_name {
+            /// 是否有效（0 为无效）
+            pub fn valid(&self) -> bool {
+                self.0 != 0
+            }
+        }
+        /// {} 输出
+        impl core::fmt::Display for $type_name {
+            fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                write!(f, "{}(0x{:x})", stringify!($type_name), self.0)
+            }
+        }
+    };
+}
+implement_usize_operations! {PhysicalAddress}
+implement_usize_operations! {PhysicalPageNumber}
+
+```
+
+对于 `PhysicalAddress` 只实现了页偏移方法 `page_offset(&self)->usize` ，其他方法由于与 `PhysicalPageNumber` 有很多重复，rCore 在这里将其通过 `macro_rules!` 将两者进行了合并，而后通过 `implement_address_to_page_number!{PhysicalAddress, PhysicalPageNumber}` 和 `implement_usize_operations! {PhysicalAddress}` 在编译期进行了宏展开，因此效果上简化了一些代码。
+
+### 物理内存管理
+
+通常物理内存的分配是以页（Frame）为单位进行分配的，在 rCore 中以 4KB 为一页的大小。
 
 ## 实验指导思考题
 
@@ -21,7 +193,7 @@ updated: 2021-01-21
 
 >   参考答案：
 >
->   在 .bss 段中，因为我们用来存放动态分配的这段是一个静态没有初始化的数组，算是内核代码的一部分。
+>   在 .bss 段中，因为我们用来存放动态分配的这段是一个静态初始化为 `0` 的数组，算是内核代码的一部分。
 >
 >   对于一般程序而言，其内存布局是通用的。动态分配内存操作系统会将其动态申请的内存放在程序内存布局中的 heap 中，但对于这里的 rCore 而言，其内存布局由链接文件 `os/src/linker.ld` 指定
 >
@@ -114,7 +286,7 @@ updated: 2021-01-21
 >   .kernel_end 0x80a1ffb8
 >   ```
 >
->   因此动态分配内存在 `[0x80a1ffb8, 0x8800_0000]` 范围。
+>   因此动态分配内存在 `[0x80a1ffb8, 0x8800_0000) 范围。
 
 ###   物理内存分配中，下面代码有什么问题？
 
