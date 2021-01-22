@@ -1,3 +1,13 @@
+---
+title: rCore lab2
+description: Memory management.
+keyword: [Allocator, Frame, PPN, FrameTracker, Buddy System, Slab, Heap allocator, Segement tree, rCore]
+tags: [rCore,] 
+categories: Tech
+toc: true
+date: 2021-01-17 10:40:09
+updated: 2021-01-22
+---
 ## Introduction
 
 **Memory Management** is an important component in **Operating System**, and plays key role both in Process/Thread implementation and I/O subsystem. It is a classic problem for OS designing and many book s introducing Memory Management at length. However, implementing a memory management system are not easy, especially from zero to one. But it is also perhaps the most helpful approach to understanding the key principles of memory management. [rCore lab 2](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-2/practice.html) is focusing on the implementation of physical memory management through some classic methods like abstracting memory with **frame**.
