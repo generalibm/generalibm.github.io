@@ -3,7 +3,7 @@ title: What I Have Learnt From the Dissertation of Danqi
 date: 2019-03-03 16:53:28
 tags: dissertation
 keyword: [Reading comprehension, NLP, Dissertation for doctor degree]
-categories: rumination
+categories: Thinking
 description: It is some ideas about what I have recently been reading and thinking.
 toc: true
 ---
