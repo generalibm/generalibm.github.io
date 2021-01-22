@@ -6,7 +6,7 @@
   <title>An openSBI shutdown bug in rCore lab | A creative expression</title>
   <meta name="author" content="generalibm">
   
-  <meta name="description" content="openSBI v0.7 have not implemented RISC-V SBI yet?">
+  <meta name="description" content="openSBI v0.7 has not implemented RISC-V SBI v0.2 yet?">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -46,7 +46,26 @@
   
   <!-- analytics -->
   
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
 
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -121,12 +140,12 @@
 	<div class="mypage">		
 	  
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> <p>openSBI v0.7 have not implemented RISC-V SBI yet?</p>
+			<i class="fa fa-info-circle"></i> <p>openSBI v0.7 has not implemented RISC-V SBI v0.2 yet?</p>
 			
 		 </div> <!-- alert -->
 	  		
 
-	  <p>Over days debug I have not figured out why qemu in my machine always says something deffrent from the <a href="https://rcore-os.github.io/rCore-Tutorial-deploy/docs/pre-lab/env.html" target="_blank" rel="noopener">project manul</a>. But now I can even send an issue to rCore group with my pull request, even though the key of the bug does lie in qemu or openSBI rather than rCore. </p>
+	  <h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>Over days debug I have not figured out why qemu in my machine always says something deffrent from the <a href="https://rcore-os.github.io/rCore-Tutorial-deploy/docs/pre-lab/env.html" target="_blank" rel="noopener">project manul</a>. But now I can even send an issue to rCore group with my pull request, even though the key of the bug does lie in qemu or openSBI rather than rCore. </p>
 <a id="more"></a>
 <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>下载最<a href="https://github.com/rcore-os/rCore-Tutorial" target="_blank" rel="noopener">新代码</a>后，切换到 lab-1 分支，<code>make run</code> 出现如下错误信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">src/main.rs:44: <span class="string">'end of rust_main'</span></span><br><span class="line">sbi_trap_error: hart0: <span class="built_in">trap</span> handler failed (error -2)</span><br><span class="line">sbi_trap_error: hart0: mcause=0x0000000000000007 mtval=0x0000000000100000</span><br><span class="line">sbi_trap_error: hart0: mepc=0x0000000080003d3e mstatus=0x8000000000007800</span><br><span class="line">sbi_trap_error: hart0: ra=0x0000000080008228 sp=0x000000008001ec98</span><br><span class="line">sbi_trap_error: hart0: gp=0x0000000000000000 tp=0x000000008001f000</span><br><span class="line">sbi_trap_error: hart0: s0=0x000000008001eca8 s1=0x0000000000000040</span><br><span class="line">sbi_trap_error: hart0: a0=0x0000000000000000 a1=0x0000000080003d2a</span><br><span class="line">sbi_trap_error: hart0: a2=0x0000000080003d2a a3=0x0000000080003d2a</span><br><span class="line">sbi_trap_error: hart0: a4=0x0000000000100000 a5=0x0000000000005555</span><br><span class="line">sbi_trap_error: hart0: a6=0x0000000000003d2a a7=0x000000008000e0e0</span><br><span class="line">sbi_trap_error: hart0: s2=0x0000000000000000 s3=0x000000008001f000</span><br><span class="line">sbi_trap_error: hart0: s4=0x0000000000000000 s5=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: s6=0x0000000000000001 s7=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: s8=0x0000000000000000 s9=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: s10=0x0000000000000000 s11=0x0000000000000008</span><br><span class="line">sbi_trap_error: hart0: t0=0x0000000000000000 t1=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: t2=0x000000008021622c t3=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: t4=0x0000000000000000 t5=0x0000000000000000</span><br><span class="line">sbi_trap_error: hart0: t6=0x0000000000000000</span><br></pre></td></tr></table></figure></p>
 <p>之后，gbd 和 qemu 陷入卡死状态，目前我的处理方式是 <code>kill -9</code>。</p>
@@ -254,9 +273,9 @@
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-        
+				
+    	<li class="prev"><a href="/2021/01/17/rCore-lab2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -291,6 +310,22 @@
 
 
         
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
 
     
 	
@@ -306,8 +341,8 @@
            type: "github" ? "github" : "github",       
 	       user: "generalibm",
 	       repo: "generalibm.github.io",
-		   client_id: "bf7d4ba11877db88543e",
-           client_secret: "bff8a6b06b745c0bfcdccbe225623ea8e2a057bb",
+		   client_id: "318b6e7e5d608e7f1a69",
+           client_secret: "b5f4c1d160adebb7a16db3502647f081b7cfa577",
 		   no_comment: "No comments yet. Press the button and go to comment now!",
 		   go_to_comment: "Go to comment",
 		   no_issue: "no_issue",
@@ -343,7 +378,7 @@
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    </li><li><a href="/categories/Tech/">Tech<span>8</span></a></li>
+    </li><li><a href="/categories/Tech/">Tech<span>9</span></a></li>
   
 
     </ul>
@@ -356,7 +391,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/SBI/">SBI<span>1</span></a></li> <li><a href="/tags/rCore/">rCore<span>1</span></a></li> <li><a href="/tags/shutdown/">shutdown<span>1</span></a></li> <li><a href="/tags/ecall/">ecall<span>1</span></a></li>
+  <li><a href="/tags/rCore/">rCore<span>3</span></a></li>
     </ul>
 	</div>
 	
@@ -366,7 +401,7 @@
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#问题描述"><span class="toc-article-text">问题描述</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#我的环境"><span class="toc-article-text">我的环境</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#我的追踪过程"><span class="toc-article-text">我的追踪过程</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#涉及文件"><span class="toc-article-text">涉及文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#相关段落"><span class="toc-article-text">相关段落</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#遇到问题"><span class="toc-article-text">遇到问题</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Introduction"><span class="toc-article-text">Introduction</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#问题描述"><span class="toc-article-text">问题描述</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#我的环境"><span class="toc-article-text">我的环境</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#我的追踪过程"><span class="toc-article-text">我的追踪过程</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#涉及文件"><span class="toc-article-text">涉及文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#相关段落"><span class="toc-article-text">相关段落</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#遇到问题"><span class="toc-article-text">遇到问题</span></a></li></ol>
 		</div>
 	
 	</div>

@@ -6,7 +6,7 @@
   <title>C++ rvalue reference | A creative expression</title>
   <meta name="author" content="generalibm">
   
-  <meta name="description" content="A brief illustration of c++ rvalue reference">
+  <meta name="description" content="A brief illustration of c++ rvalue reference.">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -46,7 +46,26 @@
   
   <!-- analytics -->
   
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
 
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -121,7 +140,7 @@
 	<div class="mypage">		
 	  
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> <p>A brief illustration of c++ rvalue reference</p>
+			<i class="fa fa-info-circle"></i> <p>A brief illustration of c++ rvalue reference.</p>
 			
 		 </div> <!-- alert -->
 	  		
@@ -132,7 +151,7 @@
 <li>rvalue: those could only be appeared in the right of the <code>operator =</code></li>
 </ul>
 <p><strong>note:</strong> <code>C++</code> with its user-defined types has introduced some subtleties regarding modifiability and assignability that cause this definition to be incorrect. Let us see the following samples:</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// sample 1</span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">a = b;      <span class="comment">//OK</span></span><br><span class="line">b = a;      <span class="comment">//OK</span></span><br><span class="line">a = a + b;  <span class="comment">//OK</span></span><br><span class="line"></span><br><span class="line">a + b = <span class="number">12</span>; <span class="comment">// Error, lvalue required as left operand of assignment</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 2</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">s1 + s2 = s2; <span class="comment">// It is OK, how surprising!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s1 = "</span> &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s1 = hello</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s2 = "</span> &lt;&lt; s2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s2 = world</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>() = <span class="string">"Hello World"</span>; <span class="comment">// It could be assigned to a temp object!!!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 3</span></span><br><span class="line">comple&lt;<span class="keyword">int</span>&gt; c1(<span class="number">3</span>, <span class="number">8</span>), c2(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">c1 + c2 = comple&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>);  <span class="comment">//OK, c1 + c2 could be as lvalue!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c1 = "</span> &lt;&lt; c1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c1 = (3,8)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c2 = "</span> &lt;&lt; c2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c2 = (1,0)</span></span><br><span class="line"></span><br><span class="line">comple&lt;<span class="keyword">int</span>&gt;() = <span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>); <span class="comment">//It could be assigned to a temp object!!!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// sample 1</span></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">9</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">a = b;      <span class="comment">//OK</span></span><br><span class="line">b = a;      <span class="comment">//OK</span></span><br><span class="line">a = a + b;  <span class="comment">//OK</span></span><br><span class="line"></span><br><span class="line">a + b = <span class="number">12</span>; <span class="comment">// Error, lvalue required as left operand of assignment</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 2</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s1</span><span class="params">(<span class="string">"hello"</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">s2</span><span class="params">(<span class="string">"world"</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">s1 + s2 = s2; <span class="comment">// It is OK, how surprising!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s1 = "</span> &lt;&lt; s1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s1 = hello</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"s2 = "</span> &lt;&lt; s2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//s2 = world</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span>() = <span class="string">"Hello World"</span>; <span class="comment">// It could be assigned to a temp object!!!</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// sample 3</span></span><br><span class="line"><span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt; c1(<span class="number">3</span>, <span class="number">8</span>), c2(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">c1 + c2 = <span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>);  <span class="comment">//OK, c1 + c2 could be as lvalue!!!</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c1 = "</span> &lt;&lt; c1 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c1 = (3,8)</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; <span class="string">"c2 = "</span> &lt;&lt; c2 &lt;&lt; <span class="built_in">endl</span>; <span class="comment">//c2 = (1,0)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt;() = <span class="keyword">complex</span>&lt;<span class="keyword">int</span>&gt;(<span class="number">4</span>, <span class="number">9</span>); <span class="comment">//It could be assigned to a temp object!!!</span></span><br></pre></td></tr></table></figure>
 <h3 id="the-forms-of-rvalue"><a href="#the-forms-of-rvalue" class="headerlink" title="the forms of rvalue"></a>the forms of rvalue</h3><ul>
 <li>those could only appeared in the right of the <code>operator =</code></li>
 <li>temp object</li>
@@ -192,6 +211,22 @@
 
 
         
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
 
     
 	
@@ -207,8 +242,8 @@
            type: "github" ? "github" : "github",       
 	       user: "generalibm",
 	       repo: "generalibm.github.io",
-		   client_id: "bf7d4ba11877db88543e",
-           client_secret: "bff8a6b06b745c0bfcdccbe225623ea8e2a057bb",
+		   client_id: "318b6e7e5d608e7f1a69",
+           client_secret: "b5f4c1d160adebb7a16db3502647f081b7cfa577",
 		   no_comment: "No comments yet. Press the button and go to comment now!",
 		   go_to_comment: "Go to comment",
 		   no_issue: "no_issue",
@@ -244,7 +279,7 @@
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    </li><li><a href="/categories/Tech/">Tech<span>8</span></a></li>
+    </li><li><a href="/categories/Tech/">Tech<span>9</span></a></li>
   
 
     </ul>

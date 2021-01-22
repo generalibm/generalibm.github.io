@@ -6,7 +6,7 @@
   <title>Unsigned integers in cpp | A creative expression</title>
   <meta name="author" content="generalibm">
   
-  <meta name="description" content="A brief illustration of c++ unsigned integers.">
+  <meta name="description" content="Avoid unsigned numbers whenever possible.">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -46,7 +46,26 @@
   
   <!-- analytics -->
   
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
 
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -121,13 +140,13 @@
 	<div class="mypage">		
 	  
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> <p>A brief illustration of c++ unsigned integers.</p>
+			<i class="fa fa-info-circle"></i> <p>Avoid unsigned numbers whenever possible.</p>
 			
 		 </div> <!-- alert -->
 	  		
 
 	  <p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, an <strong>integer overflow</strong> occurs when an <a href="https://en.wikipedia.org/wiki/Arithmetic" target="_blank" rel="noopener">arithmetic</a>  operation attempts to create a numeric value that is outside of the  range that can be represented with a given number of digits – either  larger than the maximum or lower than the minimum representable value. </p>
-<p>The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to <em>wrap</em> around the maximum (i.e. <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" target="_blank" rel="noopener">modulo</a> a power of the <a href="https://en.wikipedia.org/wiki/Radix" target="_blank" rel="noopener">radix</a>, usually two in modern computers, but sometimes ten or another radix). </p>
+<p>The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to <em>wrap around</em> the maximum (i.e. <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" target="_blank" rel="noopener">modulo</a> a power of the <a href="https://en.wikipedia.org/wiki/Radix" target="_blank" rel="noopener">radix</a>, usually two in modern computers, but sometimes ten or another radix). </p>
 <p>An overflow condition may give results leading to unintended  behavior. In particular, if the possibility has not been anticipated,  overflow can compromise a program’s reliability and <a href="https://en.wikipedia.org/wiki/Software_security" target="_blank" rel="noopener">security</a>. </p>
 <a id="more"></a>
 <h3 id="Unsigned-integer-range"><a href="#Unsigned-integer-range" class="headerlink" title="Unsigned integer range"></a>Unsigned integer range</h3><p>We all know that <code>c++</code> supports both <strong>signed integer</strong> and <strong>unsigned integer</strong>, the most regular example would be:</p>
@@ -186,7 +205,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">bar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    fun(<span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>The author of fun() was expecting someone to call this  function with only positive numbers.  But the caller is passing in <em>-1</em>.  What happens in this case?</p>
 <p>The signed argument of <em>-1</em> gets implicitly converted to an  unsigned parameter.  <em>-1</em> isn’t in the range of an unsigned number, so it  wraps around to some large number (probably <code>4294967295</code>).  Then the program goes ballistic.  Worse, there’s no good way to guard against  this condition from happening.  C++ will freely convert between signed  and unsigned numbers, but it won’t do any range checking to make sure  you don’t overflow your type.</p>
-<p>Many modern programming languages (such as Java and C#) either don’t include unsigned types, or limit their use. Python would raise a exception.</p>
+<p>Many modern programming languages (such as Java and C#) either don’t include unsigned types, or limit their use. Python would raise a exception. Rust has some interresting rules involving this behavior. When you’re compliling in debug mode, Rust includes checks for integer overflow that cause your program to <em>panic</em> at runtime. When you’re compliling in release mode, Rust does not include checks for integer overflow. Instead, if overflow occurs, Rust also performs <em>two’s complement wrapping</em> like c++ does.</p>
 <p><strong>Bjarne Stroustrup</strong>,  the designer of C++, said, “Using an <code>unsigned</code> instead of an <code>int</code> to gain one more bit to represent positive integers is almost never a good idea”.</p>
 <p>Unfortunately, due to some poor design choices in the C++ standard  library, completely avoiding unsigned numbers in C++ isn’t possible at  this point in time.</p>
 <p>Warning</p>
@@ -241,6 +260,22 @@
 
 
         
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
 
     
 	
@@ -256,8 +291,8 @@
            type: "github" ? "github" : "github",       
 	       user: "generalibm",
 	       repo: "generalibm.github.io",
-		   client_id: "bf7d4ba11877db88543e",
-           client_secret: "bff8a6b06b745c0bfcdccbe225623ea8e2a057bb",
+		   client_id: "318b6e7e5d608e7f1a69",
+           client_secret: "b5f4c1d160adebb7a16db3502647f081b7cfa577",
 		   no_comment: "No comments yet. Press the button and go to comment now!",
 		   go_to_comment: "Go to comment",
 		   no_issue: "no_issue",
@@ -293,7 +328,7 @@
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    </li><li><a href="/categories/Tech/">Tech<span>8</span></a></li>
+    </li><li><a href="/categories/Tech/">Tech<span>9</span></a></li>
   
 
     </ul>
@@ -306,7 +341,7 @@
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/cpp/">cpp<span>1</span></a></li>
+  <li><a href="/tags/cpp/">cpp<span>1</span></a></li> <li><a href="/tags/overflow/">overflow<span>1</span></a></li>
     </ul>
 	</div>
 	
