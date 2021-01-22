@@ -1,6 +1,6 @@
 ---
-title: '[Translation] Design is refactoring'
-subtitle: The Lifetime of Food
+title: '[Translation] The Lifetime of Food'
+subtitle: 
 date: 2019-03-06 16:53:28
 tags: [rust, lifetime rule, borrowing rule]
 keyword: [rust, lifetime rule, borrowing rule]
@@ -425,4 +425,5 @@ In our dinner party Option Four is functionally the same as Option  One. We’ve
 > 在我们的晚餐聚会中，选择四功能上和选择一相同。我们指定了两个生命周期，但是并没有使用第二个，而是使其不相关。我能确定的是，指定两个生命周期的场景是有用的，但我自己并没有遇到过。[这本书介绍了可以指定多个生命周期的，但并没有解释原因](https://doc.rust-lang.org/book/lifetimes.html#multiple-lifetimes)，关于这点我想知道更多一些。
 
 Is there more to lifetimes than this? Almost certainly. But I hope  that this analogy helps you grasp the fundamentals of why Rust has  lifetimes. If you want to learn more about fundamentals of Rust, maybe  read one of my earlier posts, [Rust via its Core Values](http://designisrefactoring.com/2016/04/01/rust-via-its-core-values/). I also suggest the [New Rustacean](http://www.newrustacean.com/) podcast, which has helped me understand quite a lot about Rust.
+
 > 关于生命周期，有比这更多的资料么？几乎可以肯定。但是我希望这个类比可以帮助你抓住为何 Rust 有生命周期这个核心基础。如果你想学习更多关于 Rust 基础知识，或许可以阅读我的早期博文 —— [Rust via its Core Values](http://designisrefactoring.com/2016/04/01/rust-via-its-core-values/)。 我也同样建议[播客 New Rustacean](http://www.newrustacean.com/)，该播客帮助我理解了很多 Rust 知识。

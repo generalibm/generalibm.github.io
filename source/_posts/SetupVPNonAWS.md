@@ -1,7 +1,7 @@
 ---
 title: Deploy VPN on AWS
 date: 2020-01-15 11:48:28
-tags: [VPN]
+tags: [VPN, AWS]
 categories: Tech
 description: The simplist way to setup a VPN in 15 minutes.
 toc: true
