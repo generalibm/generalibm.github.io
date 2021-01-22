@@ -1,10 +1,10 @@
 ---
 title: C++ rvalue reference
 date: 2019-02-14 18:46:35
-tags: cpp2.0
+tags: [cpp2.0]
 keyword: [rvalue reference, move sematics, perfect forwarding]
 categories: Tech
-description: A brief illustration of c++ rvalue reference
+description: A brief illustration of c++ rvalue reference.
 toc: true
 ---
 ## c++ rvalue reference
@@ -43,13 +43,13 @@ cout << "s2 = " << s2 << endl; //s2 = world
 string() = "Hello World"; // It could be assigned to a temp object!!!
 
 /// sample 3
-comple<int> c1(3, 8), c2(1, 0);
+complex<int> c1(3, 8), c2(1, 0);
 
-c1 + c2 = comple<int>(4, 9);  //OK, c1 + c2 could be as lvalue!!!
+c1 + c2 = complex<int>(4, 9);  //OK, c1 + c2 could be as lvalue!!!
 cout << "c1 = " << c1 << endl; //c1 = (3,8)
 cout << "c2 = " << c2 << endl; //c2 = (1,0)
 
-comple<int>() = complex<int>(4, 9); //It could be assigned to a temp object!!!
+complex<int>() = complex<int>(4, 9); //It could be assigned to a temp object!!!
 ```
 
 ### the forms of rvalue

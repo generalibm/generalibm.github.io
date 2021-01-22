@@ -1,7 +1,7 @@
 ---
 title: '[Translation] High-Performance Server Architecture'
 date: 2019-01-28 23:31:59
-tags: [High-Performance]
+tags: [High-Performance, server]
 categories: translation
 description: A translation access to techs article(unfinished).
 keywords: [High-Performance,Server Architecture]

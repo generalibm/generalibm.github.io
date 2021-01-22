@@ -1,11 +1,14 @@
 ---
 title: An openSBI shutdown bug in rCore lab
-description: openSBI v0.7 have not implemented RISC-V SBI yet?
-date: 2021-01-15 23:40:32
-tags: [SBI, rCore, shutdown, ecall]
+description: openSBI v0.7 has not implemented RISC-V SBI v0.2 yet?
+keyword: [openSBI, RISCV, rCore]
+tags: [rCore]
 categories: Tech
 toc: true
+date: 2021-01-15 23:40:32
 ---
+
+### Introduction
 
 Over days debug I have not figured out why qemu in my machine always says something deffrent from the [project manul](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/pre-lab/env.html). But now I can even send an issue to rCore group with my pull request, even though the key of the bug does lie in qemu or openSBI rather than rCore. 
 

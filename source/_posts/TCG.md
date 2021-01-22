@@ -1,7 +1,7 @@
 ---
 title: '[Translation] Trusted Computing Group At |(TCG)| Organisation'
 date: 2019-01-30 20:20:20
-tags: [TCG]
+tags: [Trusted Computing]
 categories: translation
 description: A translation try of TCG.
 toc: true

@@ -1,9 +1,10 @@
 ---
 title: "[Translation] An understanding of AI's limitations is starting to sink in"
-date: 2020-08-27 12:18:47
+descrition:
+keywords: [] 
 tags: [AI]
 categories: translation
-keywords: []
+date: 2020-08-27 12:18:47
 toc: true
 ---
 

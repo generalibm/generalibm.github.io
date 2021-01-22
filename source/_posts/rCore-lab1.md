@@ -1,22 +1,18 @@
 ---
-title: rCore lab1 spec
-subtitle: Interrupt, Exception
-description: Write an OS from zero to one based on RISC-V ISA in Rust. 
-tags: []
+title: rCore lab1
+description: Interrupt, Exception.
+keyword: [Interrupt, Expection, rCore, RISCV, bootloader, SBI]
+tags: [rCore,]
 categories: Tech
 date: 2021-01-14 14:26:06
 toc: true
 ---
+## Introduciton
+Writing an OS from zero to one based on RISC-V ISA in Rust. [rCore lab1](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-1/practice.html)  is focusing on the interations of Interrupt an Exception with SBI, which is actually a bootloader that RISC has provided.
 
-[rCore lab1](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-1/practice.html)
+Exceptions: Also called interrupt. An unscheduled event that disrupts program execution; used to detect overflow.
 
-Exceptions
-
->   Also called interrupt. An unscheduled event that disrupts program execution; used to detect overflow.
-
-Interrupts
-
->   An exception that comes from outside of the processor. (Some architectures use the term`interrupt` for all exceptions.)
+Interrupts: An exception that comes from outside of the processor. (Some architectures use the term`interrupt` for all exceptions.)
 
 <!--more-->
 
