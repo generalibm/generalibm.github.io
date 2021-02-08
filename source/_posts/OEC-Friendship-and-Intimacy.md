@@ -1,5 +1,5 @@
 ---
-title: [OEC] Friendship and Intimacy
+title: '[OEC] Friendship and Intimacy'
 description:
 keywords:
 tags: [Online English Corner]
@@ -12,7 +12,7 @@ date: 2021-02-08 15:49:38
 
 ### Introduction
 
-Friendship clearly plays an important role in our life. However, people sometimes get confused and tired in an intimate relationship, and then even choose to stay far away from friendship. What’s your idea of friendship and intimacy? Let's talk about them tonight!
+Friendship clearly plays an important role in our life. However, people sometimes get confused and tired in an intimate relationship, and then even choose to stay far away from friendship. What’s your idea of friendship and intimacy? Let's talk about them tonight!<!--more-->
 
 ### Process
 
