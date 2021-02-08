@@ -1,7 +1,7 @@
 ---
 title: rCore lab2
-description: Memory management.
-keyword: [Allocator, Frame, PPN, FrameTracker, Buddy System, Slab, Heap allocator, Segement tree, rCore]
+description: Memory Management.
+keywords: [Allocator, Frame, PPN, FrameTracker, Buddy System, Slab, Heap allocator, rCore]
 tags: [rCore,] 
 categories: Tech
 toc: true
@@ -10,7 +10,7 @@ updated: 2021-01-22
 ---
 ## Introduction
 
-**Memory Management** is an important component in **Operating System**, and plays key role both in Process/Thread implementation and I/O subsystem. It is a classic problem for OS designing and many book s introducing Memory Management at length. However, implementing a memory management system are not easy, especially from zero to one. But it is also perhaps the most helpful approach to understanding the key principles of memory management. [rCore lab 2](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-2/practice.html) is focusing on the implementation of physical memory management through some classic methods like abstracting memory with **frame**.
+**Memory Management** is an important component in **Operating System**, and plays key role both in Process/Thread implementation and I/O subsystem. It is a classic problem for OS designing and many book s illustrate Memory Management at length. However, implementing a memory management system is not easy, especially from zero to one. But it is also perhaps the most helpful approach to understanding the key principles of memory management. [rCore lab 2](https://rcore-os.github.io/rCore-Tutorial-deploy/docs/lab-2/practice.html) is focusing on the implementation of physical memory management through some classic methods like abstracting memory with **frame**. 
 
 <!--more-->
 
@@ -50,7 +50,7 @@ fn alloc_error_handler(_: alloc::alloc::Layout) -> ! {
 }
 ```
 
-在 rCore 的对分配的代码中，按照字节分配，总共在 .bss 上分配了 8MB 。因而可以使用 alloc care 中的 vec 来进行动态内存分配。比如：
+在 rCore 的堆分配的代码中，按照**字节**分配，总共在 .bss 上分配了 8MB 。因而可以使用 alloc care 中的 vec 来进行动态内存分配。比如：
 
 ```rust
 pub extern "C" fn rust_main() {
@@ -70,7 +70,7 @@ pub extern "C" fn rust_main() {
 }
 ```
 
-
+如果想分配 `0x80_0000` 个 `i32` 或者 `u8`，都会[分配失败](https://github.com/rcore-os/rCore-Tutorial/issues/129)。
 
 ### 物理内存探测
 
@@ -195,7 +195,26 @@ implement_usize_operations! {PhysicalPageNumber}
 
 ### 物理内存管理
 
-通常物理内存的分配是以页（Frame）为单位进行分配的，在 rCore 中以 4KB 为一页的大小。
+通常物理内存的分配是以页帧（Frame）为单位进行分配的，rCore 以 4KB 为一页帧的大小。在代码 `os/src/memory/frame/frame_tracker.rs:22` 中定义了物理页结构 `pub struct FrameTracker(pub(super) PhysicalPageNumber)` ，即物理页号。在代码 `os/src/memory/frame/allocator.rs:20` 中将其与一个 `Allocator` 一起作为结构 `struct FrameAllocator<T: Allocator>` 的成员，从而实现了物理页分配与具体算法无关的策略。在 `os/src/memory/frame/allocator.rs:13` 中将默认 `Allocator` 设为 `AllocatorImpl = StackedAllocator`，并用spin::Mutex 将其保护起来。
+
+
+
+### Memory Privilege
+
+内存分配完毕后，还需要将 RISCV 中 sstatus 寄存器的 SUM (permit Supervisor User Memory access) bit 位设为 `1`，从而可以从 S 态访问 U 态的（虚拟）内存 —— 参考 risv-privileded 4.1.1.2 Memory Privilege in sstatus Register。rCore 中实现在 `os/src/memory/mod.rs`中。
+
+```rust
+/// 初始化内存相关的子模块
+///
+/// - [`heap::init`]
+pub fn init() {
+    heap::init();
+    // 允许内核读写用户态内存
+    unsafe { riscv::register::sstatus::set_sum() };
+
+    println!("mod memory initialized");
+}
+```
 
 ## 实验指导思考题
 
@@ -343,7 +362,7 @@ pub extern "C" fn rust_main() -> ! {
 >   | .text    | .rodata        | .data                                  | .bss                      | Stack        | Heap               |
 >   | -------- | -------------- | -------------------------------------- | ------------------------- | ------------ | ------------------ |
 >   | asm code | read only data | initialized data, usaually global data | initialized data with `0` | local data   | dynamic allocating |
->   | \|<----- | Low address    |                                        |                           | high address | -------->\|        |
+>   | <----- | Low address    | ----- | ----- | high address | ----->   |
 >
 >   对于一个 ELF 程序文件而言，.bss 字段一般包含全局变量的名称和长度，在执行时有操作系统分配空间并初始化为零。
 >   不过，在我们执行 rust-objcopy 时，不同的字段会相应地被处理而形成一段连续的二进制数据，这段二进制数据会直接写入到 QEMU 所模拟的机器 `0x8020_0000` 位置。这是因为我们写的操作系统是直接运行在机器上的，而不是一个被操作系统加载的程序。
@@ -380,3 +399,11 @@ pub extern "C" fn rust_main() -> ! {
 
 1.  在 `memory/heap2.rs` 中，提供了一个手动实现堆的方法。它使用 `algorithm::VectorAllocator` 作为其根本分配算法，而我们目前提供了一个非常简单的 bitmap 算法（而且只开了很小的空间）。请在 `algorithm` crate 中利用伙伴算法实现 `VectorAllocator` trait。
 2.  前面说到，堆的实现本身不能完全使用动态内存分配。但有没有可能让堆能利用动态分配的空间，这样做会带来什么好处？
+
+>   参考答案：
+>
+>   我们以一个朴素的分配器算法为例：将每一次内存分配记录用链表存起来。
+>
+>   分配器最初必须具有一个节点的静态空间。而每当它仅剩一个节点空间时，都可以用它来为自己分配一块更大的空间。如此，就实现了分配器动态分配自己。
+>
+>   再考虑到，每次分配 1KB 或 1MB 都需要额外保存一份元信息。如果只用静态分配，就必须按最坏情况（每次都只分配最小单元）来预先留好空间。使用动态分配就可以减少空间浪费。
