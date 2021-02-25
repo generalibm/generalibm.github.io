@@ -1,0 +1,523 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>[Translation] Blocking IO Nonblocking IO and Epoll | A creative expression</title>
+  <meta name="author" content="generalibm">
+  
+  <meta name="description" content="This post explains epoll usage and differences between blocking and nonblocking IO.">
+  
+  <meta name="keywords" content="Blocking IO,Nonblocking IO,Epoll">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="[Translation] Blocking IO Nonblocking IO and Epoll">
+  <meta property="og:site_name" content="A creative expression">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">A creative expression</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> [Translation] Blocking IO Nonblocking IO and Epoll</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>This post explains epoll usage and differences between blocking and nonblocking IO.</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <h1 id="Blocking-I-O-Nonblocking-I-O-And-Epoll"><a href="#Blocking-I-O-Nonblocking-I-O-And-Epoll" class="headerlink" title="Blocking I/O, Nonblocking I/O, And Epoll"></a><a href="https://eklitzke.org/blocking-io-nonblocking-io-and-epoll" target="_blank" rel="noopener">Blocking I/O, Nonblocking I/O, And Epoll</a></h1><p>In this post I want to explain exactly what happens when you use nonblocking I/O. In particular, I want to explain:</p>
+<ul>
+<li><p>The semantics of setting <code>O_NONBLOCK</code> on a file descrpter using <code>fcntl</code></p>
+</li>
+<li><p>How nonblocking I/O is different from asynchronous I/O</p>
+</li>
+<li><p>Why nonblocking I/O is frequently used in conjunction with I/O multiplexers like <code>select</code>, <code>epoll</code>, and <code>kqueue</code></p>
+</li>
+<li><p>How nonblocking mode interacts with edge-triggered polling with <code>epoll</code></p>
+</li>
+</ul>
+<blockquote>
+<p>  在这篇博文中，我想解释当使用 非阻塞IO 时确切发生了什么。具体地，我想解释：</p>
+<ul>
+<li><p>在一个文件描述上使用 <code>fcntl</code> 为其设置 <code>O_NONBLOCKING</code> 标志的那些语义</p>
+</li>
+<li><p>非阻塞IO 与 异步IO 如何不同</p>
+</li>
+<li><p>为什么 非阻塞IO 经常和 IO复用,如<code>select</code>, <code>epoll</code> 或 <code>kqueue</code> 一起使用</p>
+</li>
+<li><p>非阻塞模式如何与 <code>epoll</code> 边沿触发 (edge-trigered) 轮训方式交互</p>
+</li>
+</ul>
+</blockquote>
+<a id="more"></a>
+<h3 id="Blocking-Mode"><a href="#Blocking-Mode" class="headerlink" title="Blocking Mode"></a>Blocking Mode</h3><blockquote>
+<p>  阻塞模式</p>
+</blockquote>
+<p>By default, all file descriptors on Unix systems start out in “blocking mode”. That means that I/O system calls like <code>read</code>, <code>write</code>, or <code>connect</code> can block. A really easy way to understand this is to think about what happens when you read data on stdin from a regular TTY-based program. If you call <code>read</code> on stdin then your program will block until data is actually available, such as when the user actually physically types characters on their keyboard. Specifically, the kernel will put the process into the “sleeping” state until data is available on stdin. This is also the case for other types of file descriptors. For instance, if you try to read from a TCP socket then the <code>read</code> call will block until the other side of the connection actually sends data.</p>
+<blockquote>
+<p>  默认情况下，Unix 中的所有文件描述符都开启的是“阻塞模式”。这意为着，I/O 类系统调用如 <code>read</code>, <code>write</code>, 或 <code>connect</code> 会阻塞。一个容易理解的例子是，考虑在一个 TTY 程序中，从标准输入流 (stdin) 中读入数据时发生的情况。如果从标准输入中读入数据，那么该程序会一直阻塞，直到有数据可用为止，比如用户从键盘中键入字符。具体说来，内核会使进程休眠，直到标准输入有数据可用。其他文件描述符了符合这种情况。例如，从 TCP 套接字中读取数据，然后 <code>read</code> 系统调用会一直阻塞，直到另一端上有数据发过来为止。</p>
+</blockquote>
+<p>Blocking is a problem for programs that should operate concurrently, since blocked processes are suspended. There are two different, complementary ways to solve this problem. They are:</p>
+<ul>
+<li><p>Nonblocking mode</p>
+</li>
+<li><p>I/O multiplexing system calls, such as <code>select</code> and <code>epoll</code></p>
+</li>
+</ul>
+<p>These two solutions are often used together, but they are independent strategies to solving this problem, and often both are used. In a  moment we’ll see the difference and why they’re commonly both used.</p>
+<blockquote>
+<p>  因为阻塞着的进程是挂起状态，所以对于并发程序而言，阻塞是个大问题。解决此问题，有两种完全不同处理思路。</p>
+<ul>
+<li><p>非阻塞模式（的I/O）</p>
+</li>
+<li><p>I/O 复用，例如 <code>select</code> 和 <code>epoll</code> 系统调用</p>
+<p>这两种方案经常会一起使用，但它们同时也是针对该问题的两种独立策略，因而都会被用到。之后，我们会讨论两者的区别也会讨论为什么它们会都用到。</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="Nonblocking-Mode-O-NONBLOCK"><a href="#Nonblocking-Mode-O-NONBLOCK" class="headerlink" title="Nonblocking Mode (O_NONBLOCK)"></a>Nonblocking Mode (O_NONBLOCK)</h3><blockquote>
+<p>  非阻塞模式 (O_NONBLOCK)</p>
+</blockquote>
+<p>A file descriptor is put into “nonblocking mode” by adding <code>O_NONBLOCK</code> to set of <code>fcntl</code> flags on the file descriptor:</p>
+<blockquote>
+<p>  一个文件描述符通过 <code>fcntl</code> 为其添加 <code>O_NONBLOCK</code> 标志后就会进入 ”非阻塞模式“。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* set O_NONBLOCK on fd*/</span></span><br><span class="line"><span class="keyword">int</span> flags = fcntl(fd, F_GETFL, <span class="number">0</span>);</span><br><span class="line">fcntl(fd, FSETFL, flags | O_NONBLOCK);</span><br></pre></td></tr></table></figure>
+<p>From this point forward the file descriptor is considered nonblocking. When this happens I/O system calls like <code>read</code> and <code>write</code> that would block will return <code>-1</code>, and <code>errno</code> will be set to <code>EWOULDBLOCK</code>.</p>
+<blockquote>
+<p>  此后，该文件描述符会被认为是非阻塞的。<code>read</code> 和 <code>write</code> 等阻塞式系统调用会返回 <code>-1</code>, 而且 <code>errno</code> 会设置为 <code>EWOULDBLOCK</code>。</p>
+</blockquote>
+<p>This is interesting, but on its own is actually not that useful. With just this primitive there’s no efficient way to do I/O on multiple file descriptors. For instance, suppose we have two file descriptors and want to read both of them at once. This could be accomplished by having a loop that checks each file descriptor for data, and then sleeps momentarily before checking again:</p>
+<blockquote>
+<p>  着很有趣，但单单就此设置而言实用不大。单此系统级支持而言，并无高效方式来处理多个文件描述符。例如，假设我们有两个文件描述，而且希望同时读取数据。这或许可以使用循环检查各个文件描述符的数据然后在下次检查之前休眠一会儿来实现。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">timespec</span> <span class="title">sleep_interval</span>&#123;</span>.tv_sec = <span class="number">0</span>, .tv_nsec = <span class="number">1000</span>&#125;;</span><br><span class="line"><span class="keyword">ssize_t</span> nbytes;</span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    <span class="comment">/* try fd1 */</span></span><br><span class="line">    <span class="keyword">if</span> ((nbytes = read(fd1, buf, <span class="keyword">sizeof</span>(buf))) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (errno != EWOULDBLOCK) &#123;</span><br><span class="line">            perror(<span class="string">"read/fd1"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        handle_data(buf, nbytes);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/* try fd2 */</span></span><br><span class="line">    <span class="keyword">if</span> ((nbytes = read(fd2, buf, <span class="keyword">sizeof</span>(buf))) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (error != EWOULDBLOCK) &#123;</span><br><span class="line">            perror(<span class="string">"read/fd2"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        handle_data(buf, nbytes);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/* sleep for a bit; real version needs error chekcing! */</span></span><br><span class="line">    nanosleep(sleep_interval, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This works, but has a lot of drawbacks:</p>
+<ul>
+<li><p>When data is coming in very slowly the program will wake up frequently and unnecessarily, which wastes CPU resources.</p>
+</li>
+<li><p>When data does come in, the program may not read it immediately if it’s sleeping, so the latency of the program will be poor.</p>
+</li>
+<li><p>Handling a large number of file descriptors with this pattern would become cumbersome.</p>
+</li>
+</ul>
+<p>To fix these problems we need an I/O multiplexer.</p>
+<blockquote>
+<p>  这是可以达到要求的，但有许多不足：</p>
+<ul>
+<li>当数据到来的速度很慢时，程序会经常性被唤醒，这很不必要，而且浪费CPU资源</li>
+<li>当数据如期到来，如果程序在休眠那么不能够立即读取数据，因此存在很严重的延迟问题</li>
+<li>用这种模式处理多个文件描述是，会即为繁琐</li>
+</ul>
+</blockquote>
+<h3 id="I-O-multiplexing-select-epoll-kqueue-etc"><a href="#I-O-multiplexing-select-epoll-kqueue-etc" class="headerlink" title="I/O multiplexing (select, epoll, kqueue, etc.)"></a>I/O multiplexing (select, epoll, kqueue, etc.)</h3><blockquote>
+<p>  I/O 复用技术 (select, epoll, kqueue, 等)</p>
+</blockquote>
+<p>There’s a few I/O multiplexing system calls. Examples of I/O multiplexing calls include <code>select</code> (defined by POSIX) , the <a href="https://man7.org/linux/man-pages/man7/epoll.7.html" target="_blank" rel="noopener">epoll family</a> on Linux, and the <a href="https://www.freebsd.org/cgi/man.cgi?query=kqueue&amp;sektion=2" target="_blank" rel="noopener">kqueue family</a> on BSD. These all work fundamentally the same way: they let the kernel know what events (typically read events and write events) are of interest on a set of file descriptors, and then they bock until something of interest happens. For instance, you might tell the kernel you are interested in just read events on file descriptor <em>X</em>, both read and write events on file descriptor <em>Y</em>, and just write event file descriptor <em>Z</em>.</p>
+<blockquote>
+<p>  存在许多 I/O复用系统调用。例子如 Linux 下的 epoll 家族和 POSIX 定义的 select，再如 BSD 下的 kqueue 家族。它们的工作原理一样：它们让内核感知到一系列文件描述符的事件（特别是读事件和写事件），然后会一直阻塞直到感兴趣的事情发生为止。例如，你可以对文件描述符 <em>X</em> 的读事件感兴趣，对文件描述符 <em>Y</em> 的读写事件感兴趣，对文件描述符 <em>Z</em> 的写事件感兴趣。</p>
+</blockquote>
+<p>These I/O multiplexing system calls typically do not care if the file descriptors are in blocking mode or nonblocking mode. You can leave all of your file descriptors in blocking mode and they’ll work just fine with <code>select</code> or <code>epoll</code>. If you only call <code>read</code> and <code>write</code> on file descriptors returned by <code>select</code> and <code>epoll</code> the calls won’t block, event if those file descriptors are in blocking mode. There’s one important exception! The blocking or nonblocking status of a file descriptor is significant for edge-triggered polling, as explained further blow.</p>
+<blockquote>
+<p>  这些 I/O 复用系统调用一般不关心文件描述符是阻塞模式还是非阻塞模式。对于 <code>select</code> 和 <code>epoll</code> 而言，让文件描述符处于阻塞模式也是可以正常工作的。如果仅仅是对这些 由 <code>select</code> 和 <code>epoll</code> 返回的 （阻塞的） 文件描述调用 <code>read</code> 和 <code>write</code> ，它们是不会阻塞的。但也是一个非常重要的例外！对于边沿触发式轮训，文件描述符的阻塞与否就会格外特别，下面将会深入讨论这个情况。</p>
+</blockquote>
+<p>The multiplexing approach to concurrency is what I call “asynchronous I/O”. Sometimes people will call this same approach “nonblocking I/O”, which I believe comes from a confusion about what “nonblocking” means at the systems programming level. I suggest reserving the term “nonblocking” for referring to whether or not file descriptors are actually in nonblocking mode or not.</p>
+<blockquote>
+<p>  并发下的 I/O 复用思路，我称之为 “异步I/O”。有时人们也会把这个思路称之为“非阻塞式 I/O”，我相信这是来自系统编程层面上对于“非阻塞式 I/O” 的混淆。我建议将 “非阻塞式 I/O”（这个名称）保留给一个文件描述符是否是阻塞模式。 </p>
+</blockquote>
+<h3 id="How-O-WOULDBLOCK-interacts-With-I-O-Multiplexing"><a href="#How-O-WOULDBLOCK-interacts-With-I-O-Multiplexing" class="headerlink" title="How O_WOULDBLOCK interacts With I/O Multiplexing"></a>How O_WOULDBLOCK interacts With I/O Multiplexing</h3><blockquote>
+<p>  <code>O_WOULDBLOCK</code> 状态如何与 I/O 复用交互</p>
+</blockquote>
+<p>Let’s say we’re writing a simple socket server using <code>select</code> with blocking file descriptors. For simplicity, in this example we just have descriptors we want to read from, which are in <code>read_fds</code>. The core part of the event loop will call <code>select</code> and then invoke <code>read</code> once for each file descriptor with data:</p>
+<blockquote>
+<p>  假设我们预计使用 <code>select</code> 和阻塞式文件描述符写一个简单的套接字服务器。简而化之，在这个例子中，我们仅关注读取的文件描述符（read_fds）。主体部分的事件循环会调用 <code>select</code> 然后对每个有数据的文件描述符立即触发 <code>read</code>系统调用。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> nbytes;</span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    <span class="comment">/* select call happens here */</span></span><br><span class="line">    <span class="keyword">if</span> (select(FD_SETSIZE, &amp;read_fds, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">"select"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAIFLURE);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; FD_SETSIZE; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (FD_ISSET(i, &amp;read_fds)) &#123;</span><br><span class="line">            <span class="comment">/* read call happens here */</span></span><br><span class="line">            <span class="keyword">if</span> ((nbytes = read(i, buf, <span class="keyword">sizeof</span>(buf))) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                handle_read(nbytes, buf);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">/* real version needs to handle EINTR correctly */</span></span><br><span class="line">                perror(<span class="string">"read"</span>);</span><br><span class="line">                <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This works and it’s perfectly fine. But, what happens if <code>buf</code> is small, and a lot of data comes down the line? To be concrete, suppose that <code>buf</code> is a 1024-byte buffer but 64KB of data comes in all at once. To handle this request we’ll invoke <code>select</code> followed by <code>read</code> 64 times. That’s 128 total system calls, which is a lot.</p>
+<blockquote>
+<p>  这段代码可以工作，而且还很完美。但是，如果 <code>buf</code> 很小，却有很多数据到达又当如何？具体说来，假设 <code>buf</code> 是 1024 字节的缓冲区，但是立马有 64KB 数据到来。为处理该请求，我们需要在 <code>read</code> 后触发 <code>select</code> 64 次。总共 128 次系统调用，这的确太多了。</p>
+</blockquote>
+<p>If the buffer size is too small <code>read</code> will have to be called a lot of times, there’s no avoiding that. But perhaps we could reduce the number of times we call <code>select</code> ? Ideally in this example we would call <code>select</code> only one time.</p>
+<blockquote>
+<p>  如果缓冲区大小太小，<code>read</code> 将会调用很多次，这无可避秒。那么我们能否减少 <code>select</code> 调用的次数呢？理想情况下，我们可以做到仅调用 <code>select</code> 一次。</p>
+</blockquote>
+<p>In fact, this is possible, and it’s accomplished by putting the file descriptors into nonblocking mode. The basic idea is that you keep calling <code>read</code> in a loop until it returns <code>EWOULDBLOCK</code>. That looks like this:</p>
+<blockquote>
+<p>  实际上，这是可能的，可以通过将文件描述符设置为非阻塞模式来实现。基本观点是得一直调用 <code>read</code>， 直到返回 <code>EWOULDBLOCK</code> 为止。可能的实现的方式如下： </p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> nbytes;</span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    <span class="comment">/* select call happens here */</span></span><br><span class="line">    <span class="keyword">if</span> (select(FD_SETSIZE, &amp;read_fds, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        perror(<span class="string">"select"</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; FD_SETSIZE; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (FD_ISSET(i, &amp;read_fds)) &#123;</span><br><span class="line">            <span class="comment">/* NEW: loop until EWOULDBLOCK is encounted */</span></span><br><span class="line">            <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">                <span class="comment">/* read call happens here */</span></span><br><span class="line">                nbytes = read(i, buf, <span class="keyword">sizeof</span>(buf));</span><br><span class="line">                <span class="keyword">if</span> (nbytes &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    handle_read(nbytes, buf);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (errno != EWOULDBLOCK) &#123;</span><br><span class="line">                        <span class="comment">/* read version needs to handle EINTR correctly */</span></span><br><span class="line">                        perror(<span class="string">"read"</span>);</span><br><span class="line">                        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example (1024-byte buffer with 64KB of data incoming) we’ll do 66 system calls: <code>select</code> will be called one time, <code>read</code> will be called without error 64 times, and <code>read</code> will be called and return <code>EWOULDBLOCK</code> one time. This is much better! This is nearly half the number from the previous example, which will improve  performance and scalability considerably.</p>
+<blockquote>
+<p>  在这个例子中 (1024 字节的缓冲区 和 到来的 64KB数据)，我们需要 66 次系统调用：<code>select</code> 调用一次，<code>read</code> 会无错调用 64 次，另外还会调用后返回 <code>EWOULDBOCK</code> 错误一次。相较之前，这好很多了！将近是此前例子的一半，从性能上和可扩展性显著提升。</p>
+</blockquote>
+<p>The downside of this approach is that due to the new loop, there’s at least one extra <code>read</code> that happens since it’s called until it returns <code>EWOULDBLOCK</code>. Let’s say that typically the read buffer is large enough to read all of the incoming data in one <code>read</code> call. Then in the usual case through the loop there will be three system calls rather than just two: <code>select</code> to wait for the data, <code>read</code> to actually read the data, and then <code>read</code> again to get <code>EWOULDBLOCK</code>.</p>
+<blockquote>
+<p>  这个方法的缺点是多了一个循环，也会额外调用一次 <code>read</code> 从而从<code>EWOULDBLOCK</code> 中返回。那么通常情况下缓冲区足够大，可以一次读取所有到来的数据。那么通常情况下需要 3 次系统调用而不是 2 次：<code>select</code> 一次，<code>read</code> 读取数据一次，<code>read</code> 从 <code>EWOULDBLOCK</code> 中返回一次。</p>
+</blockquote>
+<h3 id="Edge-Triggerd-Polling"><a href="#Edge-Triggerd-Polling" class="headerlink" title="Edge-Triggerd Polling"></a>Edge-Triggerd Polling</h3><blockquote>
+<p>  边沿触发轮训</p>
+</blockquote>
+<p>There’s one more important use of nonblocking I/O: with edge-triggered polling in the <code>epoll</code> system call. This system call has two modes: leve-triggered polling, and edge-triggered polling. Level-triggered polling is a simpler programming model that similar to the classic <code>select</code> system call. To explain the difference we need to understand how <code>epoll</code> works with the kernel.</p>
+<blockquote>
+<p>  非阻塞 I/O 有一个重要的使用场景：和 <code>epoll</code> 系统调用一起使用。该系统调用有两种模式：水平触发和边沿触发。水平触发和典型的 <code>select</code> 系统调用很相似。为了解释二者的不同，我们得先理解 <code>epoll</code> 如何与内核一起工作。</p>
+</blockquote>
+<p>Suppose you tell the kernel you’re interested in using <code>epoll</code> to monitor read events on some file descriptor. The kernel maintains a list of these interests for each file descriptor. When data comes in on the file descriptor the kernel traverses the interests list and wakes up each process that was blocked in <code>epoll_wait</code> with that descriptor in the event list.</p>
+<blockquote>
+<p>  假设你告诉内核你对<code>epoll</code> 监视的某些文件描述符上的读事件感兴趣。内核会为每个文件描述符维护一个链表。当该文件描述符有数据到来时，内核会遍历该文件描述符相关的链表上的所有感兴趣事件，然后通过该文件描述上的事件链表唤醒每一个阻塞在 <code>epoll_wait</code> 中的进程。</p>
+</blockquote>
+<p>What I outlined above happens regardless of what triggering mode <code>epoll</code> is in. The difference between level-triggered and edge-triggered polling is what happens in the kernel when you call <code>epoll_wait</code>. In level-triggered mode the kernel will traverse each file descriptor in the interest list to see if it already matches the interest condition. For instance, if you registered a read event on file descriptor 8, when calling <code>epoll_wait</code> the kernel we first check: does file descriptor 8 already have data ready for reading? If any of the file descriptors match interest then <code>epoll_wait</code> can return without blocking.</p>
+<blockquote>
+<p>  无论 <code>epoll</code> 是什么触发模式，以上我述之都是如此。水平触发与边沿触发之不同之处在于调用 <code>epoll_wait</code> 时，内核发生了什么。在水平触发模式下，内核会遍历兴趣列表中每一个文件描述符以检查是否匹配条件。例如，如果你在文件描述符 8 上注册了读事件，当调用 <code>epoll_wait</code> 时，内核首先会检查：文件描述符 8 是否有数据可读？只要有文件描述符（可多个）匹配（读事件），那么 <code>epoll_wait</code> 就会无阻塞地返回。</p>
+</blockquote>
+<p>By contrast, in edge-triggered mode the kernel skips this check and immediately puts the process to sleep when it calls <code>epoll_wait</code>. This puts all of the responsibility on you, the programmer, to do the Right Thing and fully read and write all data for each file descriptor before waiting on this.</p>
+<blockquote>
+<p>  与之相反的是，在边沿触发模式下，在调用 <code>epoll_wait</code> 时内核会跳过检查直接将进程休眠。这样将所有的正确事情（程序实际业务逻辑）职责丢给了程序开发人员，从而在等待之前读写每一个文件描述符的所有数据。</p>
+</blockquote>
+<p>This edge-triggered mode is what makes <code>epoll</code> an <em>O(1)</em> I/O multiplexer: the <code>epoll_wait</code> call will suspend immediately, and since a list is maintained for each file descriptor ahead of time, when new data comes in the kernel immediately knows what processes must be woken up in <em>O(1)</em> time.</p>
+<blockquote>
+<p>  <code>epoll</code> I/O 复用中 <em>O(1)</em> 性能的是边沿触发：<code>epoll_wait</code> 调用会立即挂起，因为每个文件描述符提前维护了一个列表，当有新数据到来时，内核立即知道哪些进程需要在 <em>O(1)</em> 时间内唤醒。</p>
+</blockquote>
+<p>Here’s a more worked out example of the difference between edge-triggered and level-triggered modes. Suppose your read buffer is 100 bytes, and 200 bytes of data comes in for that file descriptor. Suppose then you call <code>read</code> exactly one time and then call <code>epoll_wait</code> again. There’s still 100 bytes of data already ready to read. In level-triggered mode the kernel would notice this and notify the process that it should call <code>read</code> again. By contrast, in edge-triggered mode the kernel would immediately go to sleep. If the other side is expecting a response (e.g. the data it sent is some kind of RPC) then the two sides will “deadlock”, as the server will be waiting for the client to send more data, but the client will be waiting for the server to send a response.</p>
+<blockquote>
+<p>  这里有另一个关于水平触发和边沿触发区别的例子。假设你的缓冲区大小是 100 字节，同时有 200 字节的数据到来。假设可以调用 <code>read</code> 一次，然后可以继续调用 <code>epoll_wait</code> 。那么仍然有 100 字节数据早已就绪。在水平触发模式下，内核会感知到这个信息，并且通知进程需要再次调用 <code>read</code>。与之不同的是，在边沿触发模式下，内核会立即进入休眠。如果另一端在等待回复（例如，数据是通过 RPC 发送的），那么双方会陷入“死锁”，因为服务器等待客户端发送更多数据，然而客户端也在等待服务器的回复。</p>
+</blockquote>
+<p>To use edge-triggered polling you must put the file descriptors into nonblocking mode. Then you must call <code>read</code> or <code>write</code> until they return <code>EWOULDBLOCK</code> every time. If you fail to meet these conditions you will miss notifications from the kernel. But there’s a big upside of doing this: each call to <code>epoll_wait</code> will be more efficient, which can be very important on programs with extremely high levels of concurrency. If you want to learn more about the details I strongly encourage you to read the <a href="https://man7.org/linux/man-pages/man7/epoll.7.html" target="_blank" rel="noopener">epoll man page</a>.</p>
+<blockquote>
+<p>  使用边沿触发模式，必须为文件描述符设置非阻塞标志。然后，还得调用 <code>read</code> 或者 <code>write</code> 直到每次返回 <code>EWOULDBLOCK</code> 为止。如果没有达到这些条件，内核将不会发送通知。但是，内核这么做有一个巨大的优点，每次 <code>epoll_wait</code> 调用都会更加高效，这对于高并发程序很重要。如果你想知道更多细节，我强烈推荐你去阅读 <code>epoll</code> 的指导手册页面。</p>
+</blockquote>
+<p><strong>Update:</strong> I’ve put up a complete example of using edge-triggered epoll on GitHub:<a href="https://github.com/eklitzke/epollet" target="_blank" rel="noopener">https://github.com/eklitzke/epollet</a>.</p>
+<blockquote>
+<p>  更新：我已将一个如何使用 epoll 边沿触发的完整例子上传到了 GITHUB 上。</p>
+</blockquote>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2021/02/08/OEC-Friendship-and-Intimacy/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+        <a class="jiathis_button_weixin"></a>
+        <a class="jiathis_button_tsina"></a>
+        <a class="jiathis_button_twitter"></a>
+        <a class="jiathis_button_fb"></a>
+        <a class="jiathis_button_googleplus"></a>
+        <a class="jiathis_button_linkedin"></a>
+        <a class="jiathis_button_copy"></a>
+        <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        <a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+    <br>
+
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "generalibm",
+	       repo: "generalibm.github.io",
+		   client_id: "318b6e7e5d608e7f1a69",
+           client_secret: "b5f4c1d160adebb7a16db3502647f081b7cfa577",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "[Translation] Blocking IO Nonblocking IO and Epoll",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2021-02-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Translation/">Translation<span>5</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Epoll/">Epoll<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Blocking-I-O-Nonblocking-I-O-And-Epoll"><span class="toc-article-text">Blocking I/O, Nonblocking I/O, And Epoll</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Blocking-Mode"><span class="toc-article-text">Blocking Mode</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Nonblocking-Mode-O-NONBLOCK"><span class="toc-article-text">Nonblocking Mode (O_NONBLOCK)</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#I-O-multiplexing-select-epoll-kqueue-etc"><span class="toc-article-text">I/O multiplexing (select, epoll, kqueue, etc.)</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#How-O-WOULDBLOCK-interacts-With-I-O-Multiplexing"><span class="toc-article-text">How O_WOULDBLOCK interacts With I/O Multiplexing</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Edge-Triggerd-Polling"><span class="toc-article-text">Edge-Triggerd Polling</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2021 generalibm
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

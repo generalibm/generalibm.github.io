@@ -136,8 +136,31 @@ var _hmt = _hmt || [];
 	
 	<!-- display as entry -->	
 		<h3 class="title">
+			<div class="date"> 2019-05-07 </div>
+			<div class="article-title"><a href="/2019/05/07/unsigned-intergers-in-cpp/" title="Avoid unsigned numbers whenever possible.">Unsigned integers in cpp</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>In <a href="https://en.wikipedia.org/wiki/Computer_programming" target="_blank" rel="noopener">computer programming</a>, an <strong>integer overflow</strong> occurs when an <a href="https://en.wikipedia.org/wiki/Arithmetic" target="_blank" rel="noopener">arithmetic</a>  operation attempts to create a numeric value that is outside of the  range that can be represented with a given number of digits – either  larger than the maximum or lower than the minimum representable value. </p>
+<p>The most common result of an overflow is that the least  significant representable digits of the result are stored; the result is  said to <em>wrap around</em> the maximum (i.e. <a href="https://en.wikipedia.org/wiki/Modular_arithmetic" target="_blank" rel="noopener">modulo</a> a power of the <a href="https://en.wikipedia.org/wiki/Radix" target="_blank" rel="noopener">radix</a>, usually two in modern computers, but sometimes ten or another radix). </p>
+<p>An overflow condition may give results leading to unintended  behavior. In particular, if the possibility has not been anticipated,  overflow can compromise a program’s reliability and <a href="https://en.wikipedia.org/wiki/Software_security" target="_blank" rel="noopener">security</a>. </p>
+	
+	</div>
+  <a type="button" href="/2019/05/07/unsigned-intergers-in-cpp/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
 			<div class="date"> 2019-04-10 </div>
-			<div class="article-title"><a href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/" title="A small piece of note for Linux toolkit.">How to specify a newer version gcc for cmake</a></div>						
+			<div class="article-title"><a href="/2019/04/10/Tech-How-to-specify-a-newer-version-gcc-for-cmake/" title="A small piece of note for Linux toolkit.">How to specify a newer version gcc for cmake</a></div>						
 		</h3>
 	
 
@@ -149,7 +172,7 @@ var _hmt = _hmt || [];
 		<p>After I upgraded <code>gcc</code> from <em>version of 4.4.7</em> to <em>version of 7.4.0</em> on <strong>CentOS 6.5</strong>, some ridiculous bugs happened when I linked my project to <code>gtest</code>. So I rebuilt <code>gtest</code> using the newer <code>gcc</code>, however, bugs remained. In the end, I found that <code>cmake</code> did not use the newer <code>gcc</code> when I was typing <code>cmake ..</code> command, I guessed that was the key. </p>
 	
 	</div>
-  <a type="button" href="/2019/04/10/How-to-specify-a-newer-version-gcc-for-cmake/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/04/10/Tech-How-to-specify-a-newer-version-gcc-for-cmake/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -158,7 +181,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2019-02-14 </div>
-			<div class="article-title"><a href="/2019/02/14/CppRvalueReference/" title="A brief illustration of c++ rvalue reference.">C++ rvalue reference</a></div>						
+			<div class="article-title"><a href="/2019/02/14/Tech-Cpp-Rvalue-Reference/" title="A brief illustration of c++ rvalue reference.">C++ rvalue reference</a></div>						
 		</h3>
 	
 
@@ -170,7 +193,7 @@ var _hmt = _hmt || [];
 		<h2 id="c-rvalue-reference"><a href="#c-rvalue-reference" class="headerlink" title="c++ rvalue reference"></a>c++ rvalue reference</h2><h3 id="why-we-need-rvalue-references"><a href="#why-we-need-rvalue-references" class="headerlink" title="why we need rvalue references?"></a>why we need rvalue references?</h3><p>rvalue references are a new reference type introduced in c++0x that help solve the problem of <strong>unnecessary copying</strong> and enable <strong>perfect forwarding</strong>. When the right-hand side of an assignment is an rvalue, the the left-hand side object can steal resources from the right-hand side object rather than performing a separate allocation, thus enabling <strong>move semantics</strong>.<br>
 	
 	</p></div>
-  <a type="button" href="/2019/02/14/CppRvalueReference/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2019/02/14/Tech-Cpp-Rvalue-Reference/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -179,7 +202,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2016-12-23 </div>
-			<div class="article-title"><a href="/2016/12/23/Another Way to Generate a PrimeTable/">Another Way To Generate A Prime Table</a></div>						
+			<div class="article-title"><a href="/2016/12/23/Tech-Another-Way-to-Generate-a-PrimeTable/">Another Way To Generate A Prime Table</a></div>						
 		</h3>
 	
 
@@ -191,7 +214,7 @@ var _hmt = _hmt || [];
 		<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CalculatePrimesUpTo</span><span class="params">(<span class="keyword">int</span> max)</span> </span>&#123;</span><br><span class="line">   ::<span class="built_in">std</span>::fill(is_prime_, is_prime_ + is_prime_size_, <span class="literal">true</span>);</span><br><span class="line">   is_prime_[<span class="number">0</span>] = is_prime_[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= max; i++) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!is_prime_[i]) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// Marks all multiples of i (except i itself) as non-prime.</span></span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">2</span>*i; j &lt;= max; j += i) &#123;</span><br><span class="line">       is_prime_[j] = <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 	
 	</div>
-  <a type="button" href="/2016/12/23/Another Way to Generate a PrimeTable/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2016/12/23/Tech-Another-Way-to-Generate-a-PrimeTable/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -200,7 +223,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2016-03-16 </div>
-			<div class="article-title"><a href="/2016/03/16/IllustrateOfProtoBuf/">Protobuf 101</a></div>						
+			<div class="article-title"><a href="/2016/03/16/Tech-Illustrate-of-ProtoBuf/">Protobuf 101</a></div>						
 		</h3>
 	
 
@@ -212,7 +235,7 @@ var _hmt = _hmt || [];
 		<h2 id="Protobuf（google-protocol-buffer）"><a href="#Protobuf（google-protocol-buffer）" class="headerlink" title="Protobuf（google protocol buffer）"></a>Protobuf（google protocol buffer）</h2><h4 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h4><p>Google Protocol Buffer( 简称 Protobuf) 是 Google 公司内部的混合语言数据标准，目前已经正在使用的有超过 48,162 种报文格式定义和超过 12,183 个 .proto 文件。他们用于 RPC 系统和持续数据存储系统。<br>Protocol Buffers 是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 RPC 数据交换格式。可用于通讯协议、数据存储等领域的语言无关、平台无关、可扩展的序列化结构数据格式。官方提供了<code>C++</code>、<code>Java</code>、<code>Python</code>、<code>go</code>、<code>c #</code> 五种语言的 API，因为开源所以其他语言也相继有了支持。<a href="https://github.com/google/protobuf/releases" target="_blank" rel="noopener">详情可查看</a>。</p>
 	
 	</div>
-  <a type="button" href="/2016/03/16/IllustrateOfProtoBuf/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2016/03/16/Tech-Illustrate-of-ProtoBuf/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -260,13 +283,17 @@ var _hmt = _hmt || [];
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Tech/">Tech<span>9</span></a></li>
+			<li><a href="/categories/OEC/">OEC<span>2</span></a></li>
+		
+			<li><a href="/categories/Paper/">Paper<span>1</span></a></li>
+		
+			<li><a href="/categories/Tech/">Tech<span>10</span></a></li>
 		
 			<li><a href="/categories/Thinking/">Thinking<span>2</span></a></li>
 		
-			<li><a href="/categories/Writing/">Writing<span>0</span></a></li>
+			<li><a href="/categories/Translation/">Translation<span>5</span></a></li>
 		
-			<li><a href="/categories/translation/">translation<span>4</span></a></li>
+			<li><a href="/categories/Writing/">Writing<span>0</span></a></li>
 		
 		</ul>
 	</div>
@@ -277,27 +304,7 @@ var _hmt = _hmt || [];
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/AWS/">AWS<span>1</span></a></li>
-		
-			<li><a href="/tags/rust/">rust<span>1</span></a></li>
-		
-			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
-		
-			<li><a href="/tags/linux/">linux<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
-		
-			<li><a href="/tags/rCore/">rCore<span>3</span></a></li>
-		
-			<li><a href="/tags/server/">server<span>1</span></a></li>
-		
-			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
-		
-			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
-		
-			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
-		
-			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
 		
 			<li><a href="/tags/Trusted-Computing/">Trusted Computing<span>1</span></a></li>
 		
@@ -305,11 +312,35 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/overflow/">overflow<span>1</span></a></li>
 		
-			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+			<li><a href="/tags/dissertation/">dissertation<span>1</span></a></li>
+		
+			<li><a href="/tags/Online-English-Corner/">Online English Corner<span>2</span></a></li>
+		
+			<li><a href="/tags/lifetime-rule/">lifetime rule<span>1</span></a></li>
+		
+			<li><a href="/tags/rCore/">rCore<span>4</span></a></li>
+		
+			<li><a href="/tags/Eulogy/">Eulogy<span>1</span></a></li>
+		
+			<li><a href="/tags/linux/">linux<span>1</span></a></li>
+		
+			<li><a href="/tags/server/">server<span>1</span></a></li>
 		
 			<li><a href="/tags/AI/">AI<span>1</span></a></li>
 		
-			<li><a href="/tags/borrowing-rule/">borrowing rule<span>1</span></a></li>
+			<li><a href="/tags/rust/">rust<span>1</span></a></li>
+		
+			<li><a href="/tags/Epoll/">Epoll<span>1</span></a></li>
+		
+			<li><a href="/tags/AWS/">AWS<span>1</span></a></li>
+		
+			<li><a href="/tags/High-Performance/">High-Performance<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp2-0/">cpp2.0<span>1</span></a></li>
+		
+			<li><a href="/tags/VPN/">VPN<span>1</span></a></li>
+		
+			<li><a href="/tags/cpp/">cpp<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -323,23 +354,23 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2021/01/17/rCore-lab2/" title="Memory management."><i class="fa fa-file-o"></i>rCore lab2</a>
+        <a href="/2021/02/24/Translation-Blocking-IO-Nonblocking-IO-and-Epoll/" title="This post explains epoll usage and differences between blocking and nonblocking IO."><i class="fa fa-file-o"></i>[Translation] Blocking IO N...</a>
       </li>
     
       <li>
-        <a href="/2021/01/15/openSBI-bug-in-rCore-lab/" title="openSBI v0.7 has not implemented RISC-V SBI v0.2 yet?"><i class="fa fa-file-o"></i>An openSBI shutdown bug in ...</a>
+        <a href="/2021/02/08/OEC-Friendship-and-Intimacy/"><i class="fa fa-file-o"></i>[OEC] Friendship and Intimacy</a>
       </li>
     
       <li>
-        <a href="/2021/01/14/rCore-lab1/" title="Interrupt, Exception."><i class="fa fa-file-o"></i>rCore lab1</a>
+        <a href="/2021/02/05/OEC-Critical-Thinking/"><i class="fa fa-file-o"></i>[OEC] Critical Thinking</a>
       </li>
     
       <li>
-        <a href="/2020/08/27/AI-and-its-limits/"><i class="fa fa-file-o"></i>[Translation] An understand...</a>
+        <a href="/2021/02/04/Paper-The-Overview-of-Reading-Paper/"><i class="fa fa-file-o"></i>[Paper] The Overview of Rea...</a>
       </li>
     
       <li>
-        <a href="/2020/01/15/SetupVPNonAWS/" title="The simplist way to setup a VPN in 15 minutes."><i class="fa fa-file-o"></i>Deploy VPN on AWS</a>
+        <a href="/2021/01/24/rCore-lab3/" title="Virtual Memory Management."><i class="fa fa-file-o"></i>rCore lab3</a>
       </li>
     
   </ul>
