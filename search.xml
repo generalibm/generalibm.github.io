@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>cs61c introduction</title>
+      <link href="/2021/04/04/cs61c-introduction/"/>
+      <url>/2021/04/04/cs61c-introduction/</url>
+      
+        <content type="html"><![CDATA[<h3 id="Course-information"><a href="#Course-information" class="headerlink" title="Course information"></a>Course information</h3><ul><li><p><a href="https://cs61c.org/sp21/" target="_blank" rel="noopener">course homepage</a></p></li><li><p><a href="https://www.bilibili.com/video/BV1jy4y1E7AY?p=14&amp;spm_id_from=pageDriver" target="_blank" rel="noopener">video</a></p></li></ul><h3 id="Source-code"><a href="#Source-code" class="headerlink" title="Source code"></a>Source code</h3><ul><li><a href="https://github.com/61c-teach" target="_blank" rel="noopener">cs61-teach</a></li></ul><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul><li><a href="https://github.com/maksir98/cs61c" target="_blank" rel="noopener">code sharing from github</a></li><li><a href="https://github.com/haohuaijin/CS61C" target="_blank" rel="noopener">code sharing from github</a></li><li><a href="https://zhuanlan.zhihu.com/p/346676981" target="_blank" rel="noopener">experience sharing from zhihu</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Tech </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> cs61c </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>[Translation] Blocking IO Nonblocking IO and Epoll</title>
       <link href="/2021/02/24/Translation-Blocking-IO-Nonblocking-IO-and-Epoll/"/>
       <url>/2021/02/24/Translation-Blocking-IO-Nonblocking-IO-and-Epoll/</url>
@@ -83,7 +108,7 @@
       <link href="/2021/02/04/Paper-The-Overview-of-Reading-Paper/"/>
       <url>/2021/02/04/Paper-The-Overview-of-Reading-Paper/</url>
       
-        <content type="html"><![CDATA[<p>Introduction</p><a id="more"></a><p><a href="https://www.zhihu.com/question/304334959/answer/1312667716" target="_blank" rel="noopener">如何阅读文献</a></p><ul><li>避免 从头读到尾(若要翻译经典论文除外)</li><li>第零步 <strong>三个禁忌</strong>：无选择精读，只看不记，看文献不记出处</li><li>第一步 读<strong>摘要</strong>，确定 <strong>背景</strong>，<strong>研究方法</strong>，和<strong>结论</strong></li><li>第二步 读<strong>结论</strong>，确定 和自己研究的<strong>相关性</strong>，作者通过<strong>哪些结果</strong>得出该结论，带着问题读文献</li><li>第三步 读<strong>Introduction</strong>，确定 <strong>背景介绍</strong>，<strong>课题展开原因</strong></li><li>第四步 读<strong>图表</strong></li><li>第五步 读<strong>讨论</strong>，确定 引用文献，</li></ul><p><a href="https://site.douban.com/210084/widget/notes/13298573/note/395215017/" target="_blank" rel="noopener">宽带阅读</a></p><ul><li>概念：正确的阅读，旨在开发正确知识的判断力，<strong>读源典</strong>，<strong>追随权威阅读</strong>，eg：张五常</li><li>理论：判断力源于实践，<strong>问题意识</strong></li><li>方法论：读源典 -&gt; 追随权威阅读 -&gt; 确定该领域Issue -&gt; 问题意识 -&gt; critical thinking -&gt; 返回生活常识</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>Reading an academic paper is not an easy job, you may lose in the forest of trees. So methods are highly need to effectively tackle the issue. However, the key of them is to figure out the main ideas of the researchers, such as <strong>background</strong>, <strong>objective</strong>, <strong>method</strong>, <strong>results</strong>, <strong>and conclusion</strong>.</p><a id="more"></a><p><a href="https://github.com/chyyuu/aos_course_info/blob/master/readinglist.md" target="_blank" rel="noopener">Reading Critiques</a></p><p>Need to address the following</p><ul><li>Summary of the major innovations</li><li>What the problems the paper mentioned?</li><li>How about the important related works/papers?</li><li>What are some intriguing aspects of the paper?</li><li>How to test/compare/analyze the results?</li><li><strong>How can the research be improved?</strong></li><li><strong>If you write this paper, then how would you do?</strong></li><li><strong>What’s your test Results about the paper?</strong></li><li><strong>Give the survey paper list in the same research area?</strong></li></ul><p>Project - rCore/xv6/jos</p><ul><li>Analyze/Testing/Improving</li></ul><p>Presentation(10-15minutes)</p><ul><li>Motivation</li><li>Timeline</li><li>Expected results</li></ul><p><a href="https://www.zhihu.com/question/304334959/answer/1312667716" target="_blank" rel="noopener">如何阅读文献</a></p><ul><li>避免 从头读到尾(若要翻译经典论文除外)</li><li>第零步 <strong>三个禁忌</strong>：无选择精读，只看不记，看文献不记出处</li><li>第一步 读<strong>摘要</strong>，确定 <strong>背景</strong>，<strong>研究方法</strong>，和<strong>结论</strong></li><li>第二步 读<strong>结论</strong>，确定 和自己研究的<strong>相关性</strong>，作者通过<strong>哪些结果</strong>得出该结论，带着问题读文献</li><li>第三步 读<strong>Introduction</strong>，确定 <strong>背景介绍</strong>，<strong>课题展开原因</strong></li><li>第四步 读<strong>图表</strong></li><li>第五步 读<strong>讨论</strong>，确定 引用文献，</li></ul><p><a href="https://site.douban.com/210084/widget/notes/13298573/note/395215017/" target="_blank" rel="noopener">宽带阅读</a></p><ul><li>概念：正确的阅读，旨在开发正确知识的判断力，<strong>读源典</strong>，<strong>追随权威阅读</strong>，eg：张五常</li><li>理论：判断力源于实践，<strong>问题意识</strong></li><li>方法论：读源典 -&gt; 追随权威阅读 -&gt; 确定该领域Issue -&gt; 问题意识 -&gt; critical thinking -&gt; 返回生活常识</li></ul>]]></content>
       
       
       <categories>
